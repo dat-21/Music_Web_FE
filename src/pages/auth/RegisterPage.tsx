@@ -7,6 +7,7 @@ import { IoEyeSharp, IoEyeOffSharp } from "react-icons/io5";
 const RegisterPage = () => {
     const [formData, setFormData] = useState({
         username: "",
+        email: "",
         password: "",
         confirmPassword: "",
     });
@@ -22,8 +23,13 @@ const RegisterPage = () => {
         setSuccess(false);
 
         // Validate
-        if (formData.password !== formData.confirmPassword) {
-            showError("Mật khẩu xác nhận không khớp!");
+        if (formData.username.length < 3) {
+            showError("Tên đăng nhập phải có ít nhất 3 ký tự!");
+            return;
+        }
+
+        if (!formData.email || !formData.email.includes('@')) {
+            showError("Email không hợp lệ!");
             return;
         }
 
@@ -32,19 +38,25 @@ const RegisterPage = () => {
             return;
         }
 
-        if (formData.username.length < 3) {
-            showError("Tên đăng nhập phải có ít nhất 3 ký tự!");
+        if (formData.password !== formData.confirmPassword) {
+            showError("Mật khẩu xác nhận không khớp!");
             return;
         }
 
         try {
-            const message = await authService.signup(
+            const result = await authService.signup(
                 formData.username,
+                formData.email,
                 formData.password,
                 formData.confirmPassword,
             )
 
-            showSuccess(message || "Đăng Kí Thành Công!")
+            const successMessage =
+                typeof result === "string"
+                    ? result
+                    : (result as any)?.message ?? "Đăng Kí Thành Công!"
+
+            showSuccess(successMessage)
             setSuccess(true)
             setTimeout(() => {
                 navigate("/login");
@@ -129,6 +141,34 @@ const RegisterPage = () => {
                                 }
                                 className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition disabled:opacity-50"
                                 placeholder="Nhập tên đăng nhập"
+                                disabled={success}
+                            />
+                        </div>
+                    </div>
+
+                    {/* Email */}
+                    <div>
+                        <label
+                            htmlFor="email"
+                            className="block text-sm font-medium text-gray-700 mb-2"
+                        >
+                            Email
+                        </label>
+                        <div className="relative">
+                            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
+                                </svg>
+                            </div>
+                            <input
+                                id="email"
+                                type="email"
+                                value={formData.email}
+                                onChange={(e) =>
+                                    setFormData({ ...formData, email: e.target.value })
+                                }
+                                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition disabled:opacity-50"
+                                placeholder="Nhập email của bạn"
                                 disabled={success}
                             />
                         </div>

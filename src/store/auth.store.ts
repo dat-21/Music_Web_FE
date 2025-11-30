@@ -50,9 +50,12 @@ export const useAuthStore = create<AuthState>((set) => ({
             const user = await authService.getProfile();
             set({ user, isAuthenticated: true, isLoading: false });
         } catch (error) {
+            // ✅ Nếu lỗi verify email, clear cookie và logout
+            if ((error as any)?.message?.includes('not verified')) {
+                await authService.logout(); // Xóa cookie
+            }
             // ✅ Silent fail - không log lỗi 401
             set({ user: null, isAuthenticated: false, isLoading: false });
-            console.error('Load user failed:', error);
         }
     },
 }));

@@ -37,10 +37,11 @@ class AuthService {
     /**
      * Đăng ký và tự đăng nhập (optional: bạn có thể tắt auto login)
      */
-    async signup(username: string, password: string, confirmPassword: string): Promise<User> {
+    async signup(username: string, email: string, password: string, confirmPassword: string): Promise<User> {
         try {
             const res = await axiosInstance.post<RegisterResponse>('/auth/register', {
                 username,
+                email,
                 password,
                 confirmPassword,
             });
