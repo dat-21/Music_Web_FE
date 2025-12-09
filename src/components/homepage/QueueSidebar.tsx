@@ -28,27 +28,25 @@ const QueueSidebar = () => {
     if (!isOpen) return null;
 
     return (
-        <div className="w-96 bg-black text-white flex flex-col h-screen border-l border-gray-800">
+        <div className="w-96 bg-gray-900 text-white flex flex-col h-screen border-l border-gray-800">
             {/* Header */}
             <div className="p-4 flex items-center justify-between border-b border-gray-800">
                 <div className="flex gap-4">
                     <button
                         onClick={() => setActiveTab('queue')}
-                        className={`text-sm font-semibold px-3 py-1 rounded-full transition-colors ${
-                            activeTab === 'queue'
+                        className={`text-sm font-semibold px-3 py-1 rounded-full transition-colors ${activeTab === 'queue'
                                 ? 'bg-gray-800 text-white'
                                 : 'text-gray-400 hover:text-white'
-                        }`}
+                            }`}
                     >
                         Queue
                     </button>
                     <button
                         onClick={() => setActiveTab('recent')}
-                        className={`text-sm font-semibold px-3 py-1 rounded-full transition-colors ${
-                            activeTab === 'recent'
+                        className={`text-sm font-semibold px-3 py-1 rounded-full transition-colors ${activeTab === 'recent'
                                 ? 'bg-gray-800 text-white'
                                 : 'text-gray-400 hover:text-white'
-                        }`}
+                            }`}
                     >
                         Recently played
                     </button>

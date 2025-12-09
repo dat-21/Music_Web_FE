@@ -17,11 +17,8 @@ const Sidebar = () => {
     ];
 
     return (
-        <div className="w-64 bg-black text-white flex flex-col h-screen">
-            {/* Logo */}
-            <div className="p-6 flex items-center justify-center">
-                <img src="/logo_web.svg" alt="Melody Logo" className="h-16 w-16 invert" />
-            </div>
+        <div className="w-85  text-white flex flex-col h-screen bg-gray-900">
+
 
             {/* Main Navigation */}
             <nav className="px-2">
