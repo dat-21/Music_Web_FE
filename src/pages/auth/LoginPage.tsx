@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../store/auth.store";
-import useNotification from "../../hooks/userNotification";
+import useNotification from "../../hooks/useNotification";
 const LoginPage = () => {
     const navigate = useNavigate();
     const login = useAuthStore((state) => state.login);

@@ -5,6 +5,15 @@
 @import "tailwindcss/utilities";
 @import "tailwindcss/theme";
 
+/* Hide scrollbar */
+.no-scrollbar::-webkit-scrollbar {
+  display: none !important;
+}
+.no-scrollbar {
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
+}
+
 :root {
   /* Primary colors */
   --color-primary: #2e6ba8;
@@ -139,4 +148,10 @@ code {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-text-light);
+}
+
+/* Vertical text for collapsed sidebar */
+.writing-mode-vertical {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
 }

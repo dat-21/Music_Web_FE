@@ -20,10 +20,10 @@ const Player = () => {
     const [progress, setProgress] = useState(42);
 
     return (
-        <div className="fixed bottom-0 left-0 right-0 bg-black border-t border-gray-800 px-4 py-3 flex items-center justify-between z-50">
+        <div className="bg-black border-t px-4 py-3 flex items-center justify-between">
             {/* Current Track Info */}
             <div className="flex items-center gap-4 w-1/4">
-                <div className="w-14 h-14 bg-gradient-to-br from-blue-600 to-purple-600 rounded flex-shrink-0"></div>
+                <div className="w-14 h-14 bg-gradient-to-br from-blue-600 to-purple-600 rounded shrink-0"></div>
                 <div className="min-w-0">
                     <p className="text-white text-sm font-semibold truncate">Shouldn't Be</p>
                     <p className="text-gray-400 text-xs truncate">Luke Chiang</p>

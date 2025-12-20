@@ -14,7 +14,7 @@ const PlaylistCard = ({ title, description, image, badge, gradient }: PlaylistCa
             {/* Cover Image */}
             <div className="relative mb-4 aspect-square">
                 <div
-                    className={`w-full h-full rounded-lg ${gradient || 'bg-gradient-to-br from-purple-600 to-blue-600'} flex items-center justify-center overflow-hidden`}
+                    className={`w-full h-full rounded-lg ${gradient || 'bg-gradient-to-br from-blue-600 to-red-600'} flex items-center justify-center overflow-hidden`}
                     style={image ? { backgroundImage: `url(${image})`, backgroundSize: 'cover', backgroundPosition: 'center' } : {}}
                 >
                     {!image && (
@@ -25,7 +25,7 @@ const PlaylistCard = ({ title, description, image, badge, gradient }: PlaylistCa
                 </div>
 
                 {/* Play Button */}
-                <button className="absolute bottom-2 right-2 w-12 h-12 bg-green-500 rounded-full flex items-center justify-center shadow-lg opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all hover:scale-110">
+                <button className="absolute bottom-2 right-2 w-12 h-12 bg-blue-300 rounded-full flex items-center justify-center shadow-lg opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all hover:scale-110">
                     <Play size={20} fill="black" className="text-black ml-1" />
                 </button>
 

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
-import useNotification from "../../hooks/userNotification";
+import useNotification from "../../hooks/useNotification";
 import { useNavigate } from "react-router-dom";
 import authService from "../../services/authService";
 import { IoEyeSharp, IoEyeOffSharp } from "react-icons/io5";

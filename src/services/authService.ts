@@ -1,19 +1,6 @@
 import axiosInstance from '../api/axiosConfig';
+import type { LoginResponse, RegisterResponse, User } from '../types/auth.types';
 
-interface User {
-    id: string;
-    username: string;
-    email?: string;
-}
-
-interface LoginResponse {
-    user: User;
-}
-
-interface RegisterResponse {
-    message: string;
-    user?: User;
-}
 
 class AuthService {
     /**

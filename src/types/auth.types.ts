@@ -8,6 +8,16 @@ export interface User {
   createdAt?: string;
 }
 
+
+
+
+
+export interface RegisterResponse {
+    message: string;
+    user?: User;
+}
+ 
+
 export interface LoginRequest {
   username: string; // Thay đổi từ email
   password: string;
@@ -16,7 +26,7 @@ export interface LoginResponse {
   token: string;
   user: User;
 }
-
+ 
 export interface ApiResponse {
   message: string;
 }
