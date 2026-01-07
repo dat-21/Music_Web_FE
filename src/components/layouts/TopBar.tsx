@@ -1,7 +1,7 @@
 import { Search, Bell, User, LogOut } from 'lucide-react';
 import { useState } from 'react';
-import { useAuthStore } from '../../store/auth.store';
 import { useNavigate } from 'react-router-dom';
+import { useAuthStore } from '../../store';
 
 const TopBar = () => {
     const [searchQuery, setSearchQuery] = useState('');

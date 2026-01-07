@@ -1,8 +1,8 @@
 // import Footer from '../footer/Footer';
-import TopBar from '../../components/homepage/TopBar';
-import Sidebar from '../../components/homepage/Sidebar';
-import QueueSidebar from '../../components/homepage/QueueSidebar';
-import Player from '../../components/homepage/Player';
+import TopBar from '../../components/layouts/TopBar';
+import Sidebar from '../../components/layouts/Sidebar';
+import QueueSidebar from '../../components/layouts/QueueSidebar';
+// import Player from '../../components/layouts/Player'; // Đã move lên App.tsx
 
 interface DefaultLayoutProps {
     children: React.ReactNode;
@@ -10,7 +10,7 @@ interface DefaultLayoutProps {
 
 const DefaultLayout = ({ children }: DefaultLayoutProps) => {
     return (
-        <div className="flex flex-col h-screen bg-black overflow-hidden p-2 gap-2">
+        <div className="flex flex-col h-screen bg-black overflow-hidden p-2 gap-2 pb-21">
             {/* Top Bar - Header */}
             <div className="rounded-lg overflow-hidden">
                 <TopBar />
@@ -34,10 +34,7 @@ const DefaultLayout = ({ children }: DefaultLayoutProps) => {
                 </div>
             </div>
 
-            {/* Player Bar */}
-            <div className="rounded-lg overflow-hidden flex-shrink-0">
-                <Player />
-            </div>
+            {/* Player Bar đã được move lên App.tsx để global */}
         </div>
     );
 };

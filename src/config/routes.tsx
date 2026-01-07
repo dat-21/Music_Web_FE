@@ -3,6 +3,8 @@ const routes = {
     login: '/login',
     register: '/register',
     admin: '/admin',
+    song: '/song/:id',
+    shadcnDemo: '/shadcn-demo',
 }
 
 

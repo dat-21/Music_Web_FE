@@ -1,12 +1,21 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { Fragment, Suspense } from 'react';
 import { PublicRoutes } from './routes/AppRoutes';
 import DefaultLayout from './layouts/DefaultLayout';
-
-
-// const ErrorPage = lazy(() => import('~/pages/Error/Error'));
+import Player from './components/layouts/Player';
+import ErrorPage from './pages/ErrorPage';
 
 function App() {
+  const location = useLocation();
+
+  // Check if current route exists in PublicRoutes
+  const isValidRoute = PublicRoutes.some(route => {
+    if (route.path === location.pathname) return true;
+    // Check for dynamic routes
+    const routeRegex = new RegExp('^' + route.path.replace(/:[^/]+/g, '[^/]+') + '$');
+    return routeRegex.test(location.pathname);
+  });
+
   return (
 
     <div className="App">
@@ -60,14 +69,13 @@ function App() {
             })} */}
           <Route
             path="*"
-            element={
-              <>
-                {/* <ErrorPage /> */}
-              </>
-            }
+            element={<ErrorPage />}
           />
         </Routes>
       </Suspense>
+
+      {/* Global Music Player - Hidden on error page */}
+      {isValidRoute && <Player />}
     </div>
 
 

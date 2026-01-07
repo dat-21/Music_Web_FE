@@ -3,11 +3,19 @@ export interface User {
   username: string;
   email?: string;
   fullName?: string;
-  role?: string;
+  role?: string; 
   avatar?: string;
   createdAt?: string;
 }
+export interface AuthState {
+    user: User | null;
+    isAuthenticated: boolean;
+    isLoading: boolean; // ✅ Thêm loading state
 
+    login: (username: string, password: string) => Promise<void>;
+    logout: () => Promise<void>;
+    loadUser: () => Promise<void>;
+}
 
 
 

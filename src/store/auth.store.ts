@@ -1,22 +1,8 @@
 import { create } from 'zustand';
 import authService from '../services/authService';
+import type { AuthState } from '../types';
 
-interface User {
-    id: string;
-    username: string;
-    email?: string;
-    role?: string;
-}
 
-interface AuthState {
-    user: User | null;
-    isAuthenticated: boolean;
-    isLoading: boolean; // ✅ Thêm loading state
-
-    login: (username: string, password: string) => Promise<void>;
-    logout: () => Promise<void>;
-    loadUser: () => Promise<void>;
-}
 
 export const useAuthStore = create<AuthState>((set) => ({
     user: null,
@@ -51,7 +37,8 @@ export const useAuthStore = create<AuthState>((set) => ({
             set({ user, isAuthenticated: true, isLoading: false });
         } catch (error) {
             // ✅ Nếu lỗi verify email, clear cookie và logout
-            if ((error as any)?.message?.includes('not verified')) {
+            //
+            if (error instanceof Error && error.message?.includes('not verified')) {
                 await authService.logout(); // Xóa cookie
             }
             // ✅ Silent fail - không log lỗi 401
