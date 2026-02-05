@@ -9,7 +9,7 @@ export const useAuthStore = create<AuthState>((set) => ({
     isAuthenticated: false,
     isLoading: true, // ✅ Ban đầu đang load
 
-    login: async (username, password) => {
+    login: async (username, password) => { 
         set({ isLoading: true });
         try {
             const user = await authService.login(username, password);

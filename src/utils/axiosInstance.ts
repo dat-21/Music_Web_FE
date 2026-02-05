@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { localStorageUtils } from './localStorage.utils';
 
 const axiosInstance = axios.create({
   baseURL: 'http://localhost:5000/api',
@@ -25,15 +24,11 @@ axiosInstance.interceptors.request.use(
 );
 
 // Response interceptor - Xử lý lỗi tập trung
+// ⚠️ KHÔNG redirect ở đây - để auth store xử lý 401
+// Redirect trong interceptor gây infinite loop khi chưa login
 axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
-    // Xử lý lỗi 401 - Token hết hạn
-    if (error.response?.status === 401) {
-      localStorageUtils.clearAuthData();
-      window.location.href = '/login';
-    }
-    
     // Xử lý lỗi 403 - Không có quyền
     if (error.response?.status === 403) {
       console.error('Bạn không có quyền truy cập');

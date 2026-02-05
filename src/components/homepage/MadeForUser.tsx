@@ -2,6 +2,7 @@ import { CircleChevronLeft, CircleChevronRight } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import PlaylistCard from "../layouts/PlaylistCard";
 import { useAuthStore } from "../../store";
+import { Button } from "../ui/button";
 
 const MadeForUser = () => {
     const madeForRef = useRef<HTMLDivElement>(null);
@@ -80,39 +81,38 @@ const MadeForUser = () => {
 
             <div className="flex items-center justify-between mb-4">
                 <h2 className="text-white text-2xl font-bold">Made For</h2>
-                <button className="text-gray-400 hover:text-white text-sm font-semibold">
+                <Button
+                    variant="text"
+                    size="text"
+                >
                     Show all
-                </button>
+                </Button>
             </div>
             <p className="text-white mt-4 mb-2">
                 {isAuthenticated ? capitalizeFirstLetter(user?.username || "") : "Guest"}
             </p>
 
-            <div className="relative group">
+            <div className="relative group/scroll">
                 {/* Nút trái - chỉ hiện khi showMadeForLeft = true */}
                 {showMadeForLeft && (
-                    <button
+                    <Button
+                        variant="scrollNav"
                         onClick={() => scroll(madeForRef, 'left', setShowMadeForLeft, setShowMadeForRight)}
-                        className="absolute left-0 top-1/2 -translate-y-1/2 z-10
-                                     bg-black/80 hover:bg-black text-white
-                                     w-12 h-12 rounded-full flex items-center justify-center
-                                     opacity-0 group-hover:opacity-100 transition-opacity shadow-xl"
+                        className="left-0 opacity-0 group-hover/scroll:opacity-100"
                     >
                         <CircleChevronLeft size={24} />
-                    </button>
+                    </Button>
                 )}
 
                 {/* Nút phải - chỉ hiện khi showMadeForRight = true */}
                 {showMadeForRight && (
-                    <button
+                    <Button
+                        variant="scrollNav"
                         onClick={() => scroll(madeForRef, 'right', setShowMadeForLeft, setShowMadeForRight)}
-                        className="absolute right-0 top-1/2 -translate-y-1/2 z-10
-                                     bg-black/80 hover:bg-black text-white
-                                     w-12 h-12 rounded-full flex items-center justify-center
-                                     opacity-0 group-hover:opacity-100 transition-opacity shadow-xl"
+                        className="right-0 opacity-0 group-hover/scroll:opacity-100"
                     >
                         <CircleChevronRight size={24} />
-                    </button>
+                    </Button>
                 )}
 
                 <div
@@ -120,7 +120,7 @@ const MadeForUser = () => {
                     className="flex gap-4 overflow-x-scroll scroll-smooth no-scrollbar"
                 >
                     {dailyMixes.map((mix) => (
-                        <div key={mix.id} className="w-[180px] flex-shrink-0">
+                        <div key={mix.id} className="w-[180px] shrink-0">
                             <PlaylistCard
                                 title={mix.title}
                                 description={mix.description}

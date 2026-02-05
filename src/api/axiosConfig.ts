@@ -10,13 +10,12 @@ const axiosInstance = axios.create({
 });
 
 // Không cần request interceptor để thêm token nữa
+// ⚠️ KHÔNG redirect ở đây - để auth store xử lý 401
+// Redirect trong interceptor gây infinite loop khi chưa login
 axiosInstance.interceptors.response.use(
     (res) => res,
     (error) => {
-        if (error.response?.status === 401) {
-            // Cookie hết hạn → logout FE
-            window.location.href = '/login';
-        }
+        // Chỉ log lỗi, không redirect - auth store sẽ xử lý
         return Promise.reject(error);
     }
 );

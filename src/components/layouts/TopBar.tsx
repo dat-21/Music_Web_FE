@@ -1,6 +1,6 @@
 import { Search, Bell, User, LogOut } from 'lucide-react';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../store';
 
 const TopBar = () => {
@@ -12,13 +12,16 @@ const TopBar = () => {
         await logout();
         navigate('/login');
     };
-
     return (
         <div className="flex items-center justify-between px-6 py-2  border-b ">
             {/* Logo */}
-            <div className="flex items-center" >
-                <img src="/logo_web.svg" alt="Melody Logo" className="h-14 w-14 invert" />
-            </div >
+            <Link to="/" className="flex items-center">
+                <img
+                    src="/logo_web.svg"
+                    alt="Melody Logo"
+                    className="h-14 w-14 invert hover:scale-105 transition-transform"
+                />
+            </Link>
 
             {/* Search Bar */}
             < div className="flex-1 max-w-md mx-8" >

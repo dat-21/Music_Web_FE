@@ -1,6 +1,7 @@
 import { CircleChevronLeft, CircleChevronRight } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import PlaylistCard from "../layouts/PlaylistCard";
+import { Button } from "../ui/button";
 
 const JumpBackIn = () => {
     const [showJumpBackLeft, setShowJumpBackLeft] = useState(false);
@@ -65,17 +66,20 @@ const JumpBackIn = () => {
         return () => {
             jumpBackElement?.removeEventListener('scroll', handleJumpBackScroll);
         };
-    }, [jumpBackIn]); // Re-check khi data thay đổi
+    }, []); // Re-check khi data thay đổi
 
     return (
         <div>
             <div className="flex items-center justify-between mb-4">
                 <h2 className="text-white text-2xl font-bold">Jump back in</h2>
-                <button className="text-gray-400 hover:text-white text-sm font-semibold">
+                <Button
+                    variant="text"
+                    size="text"
+                >
                     Show all
-                </button>
+                </Button>
             </div>
-            <div className="relative group">
+            <div className="relative group/jumpbackin">
                 {/* Nút trái */}
                 {showJumpBackLeft && (<button
                     onClick={() => scroll(jumpBackRef, 'left', setShowJumpBackLeft, setShowJumpBackRight)}
@@ -89,7 +93,7 @@ const JumpBackIn = () => {
                 )}
 
                 {/* Nút phải */}
-                {showJumpBackRight && (<button
+                {showJumpBackRight && (<Button
                     onClick={() => scroll(jumpBackRef, 'right', setShowJumpBackLeft, setShowJumpBackRight)}
                     className="absolute right-0 top-1/2 -translate-y-1/2 z-10
                                      bg-black/80 hover:bg-black text-white
@@ -97,7 +101,7 @@ const JumpBackIn = () => {
                                      opacity-0 group-hover:opacity-100 transition-opacity shadow-xl"
                 >
                     <CircleChevronRight size={24} />
-                </button>)}
+                </Button>)}
 
                 <div
                     ref={jumpBackRef}

@@ -176,6 +176,10 @@
   --color-primary: #243c5a; /* Define primary color for Tailwind utilities */
   --color-primary-dark: #1a2b3f;
   --color-primary-light: #3f5e8a;
+  --color-spotify-red: #880828;
+  --color-spotify-blue: #035e8c;
+  --color-spotify-green: #1db954;
+  --color-spotify-black: #191414;
 }
 * {
   margin: 0;
@@ -184,9 +188,9 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
+    "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: var(--color-text);
@@ -194,8 +198,8 @@ body {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+  font-family:
+    source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
 /* Scrollbar styling */

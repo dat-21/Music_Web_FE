@@ -18,8 +18,8 @@ const DefaultLayout = ({ children }: DefaultLayoutProps) => {
 
             {/* Main Layout: Sidebar + Content + Queue */}
             <div className="flex flex-1 overflow-hidden gap-2 min-h-0">
-                {/* Left Sidebar */}
-                <div className="rounded-lg h-full">
+                {/* Left Sidebar - Ẩn trên mobile, hiện từ md trở lên */}
+                <div className="hidden md:block rounded-lg h-full">
                     <Sidebar />
                 </div>
 
@@ -28,8 +28,8 @@ const DefaultLayout = ({ children }: DefaultLayoutProps) => {
                     {children}
                 </main>
 
-                {/* Right Queue Sidebar */}
-                <div className="rounded-lg h-full">
+                {/* Right Queue Sidebar - Ẩn trên mobile và tablet, hiện từ lg trở lên */}
+                <div className="hidden lg:block rounded-lg h-full">
                     <QueueSidebar />
                 </div>
             </div>

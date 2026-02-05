@@ -1,5 +1,4 @@
-import { Home, Search, Library, Plus, Heart, Clock } from 'lucide-react';
-
+import { Search, Library, Plus, Heart, Clock } from 'lucide-react';
 const Sidebar = () => {
     const playlists = [
         { id: 1, name: 'Liked Songs', icon: Heart, count: '46 songs' },
@@ -17,20 +16,7 @@ const Sidebar = () => {
     ];
 
     return (
-        <div className="w-[26rem] text-white flex flex-col h-full bg-zinc-950 overflow-y-auto rounded-lg no-scrollbar">
-
-
-            {/* Main Navigation */}
-            <nav className="px-2">
-                <button className="w-full flex items-center gap-4 px-4 py-3 text-gray-300 hover:text-white transition-colors">
-                    <Home size={24} />
-                    <span className="font-semibold">Home</span>
-                </button>
-                <button className="w-full flex items-center gap-4 px-4 py-3 text-gray-300 hover:text-white transition-colors">
-                    <Search size={24} />
-                    <span className="font-semibold">Search</span>
-                </button>
-            </nav>
+        <div className="w-26rem text-white flex flex-col h-full bg-zinc-950 overflow-y-auto rounded-lg no-scrollbar">
 
             {/* Your Library */}
             <div className="mt-6 flex-1 flex flex-col overflow-hidden">
