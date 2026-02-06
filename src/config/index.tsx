@@ -1,5 +1,5 @@
 import routes from './routes';
-import { roles } from '../enum/roles';
+import { roles } from '../constants/roles';
 
 //Config
 const config = {

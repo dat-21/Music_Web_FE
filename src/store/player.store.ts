@@ -44,7 +44,7 @@ export const usePlayerStore = create<PlayerState>()(
                 currentSong: state.currentSong,
                 currentTime: state.currentTime,
                 volume: state.volume,
-                // Không lưu isPlaying và duration - sẽ được reset khi refresh
+
             }),
         }
     )
