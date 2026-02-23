@@ -7,12 +7,15 @@ import JumpBackIn from '../components/homepage/JumpBackIn';
 import { usePlayerStore } from '../store';
 import { PlayIcon, PauseIcon } from '@heroicons/react/24/solid';
 import { Button } from '../components/ui/button';
+import SongCardSkeleton from '../components/skeletons/SongCardSkeleton';
+import SectionSkeleton from '../components/skeletons/SectionSkeleton';
 
 
 
 
 const Homepage = () => {
     const [songs, setSongs] = useState<Song[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
     const navigate = useNavigate();
 
     // Subscribe chỉ những state cần thiết, không subscribe currentTime/volume/duration
@@ -29,6 +32,8 @@ const Homepage = () => {
                 setSongs(res.data.songs || []);
             } catch (error) {
                 console.error("Lỗi khi fetch danh sách bài hát", error);
+            } finally {
+                setIsLoading(false);
             }
         };
 
@@ -90,63 +95,70 @@ const Homepage = () => {
                     <div className="px-4 md:px-6 pt-3">
                         <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-3">
 
-                            {songsToShow.map((song) => {
-                                const isCurrentSong = currentSong?._id === song._id;
-                                const isSongPlaying = isCurrentSong && isPlaying;
+                            {isLoading ? (
+                                // Skeleton loading cho featured songs
+                                Array.from({ length: 8 }).map((_, i) => (
+                                    <SongCardSkeleton key={i} />
+                                ))
+                            ) : (
+                                songsToShow.map((song) => {
+                                    const isCurrentSong = currentSong?._id === song._id;
+                                    const isSongPlaying = isCurrentSong && isPlaying;
 
-                                return (
-                                    <div
-                                        key={song._id}
-                                        onClick={() => handleSongClick(song._id)}
-                                        className="bg-gray-800/40 hover:bg-gray-800/60 rounded flex items-center gap-4 overflow-hidden group cursor-pointer transition-colors relative"
-                                    >
-                                        <div className="relative flex-shrink-0">
-                                            {song.coverUrl ? (
-                                                <img
-                                                    src={song.coverUrl}
-                                                    alt={song.title}
-                                                    className="w-20 h-20 object-cover"
-                                                />
-                                            ) : (
-                                                <div className="w-20  h-20 bg-gradient-to-br from-blue-500 to-black-500 flex items-center justify-center">
-                                                    <svg className="w-10 h-10 text-white/80" fill="currentColor" viewBox="0 0 20 20">
-                                                        <path d="M18 3a1 1 0 00-1.196-.98l-10 2A1 1 0 006 5v9.114A4.369 4.369 0 005 14c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V7.82l8-1.6v5.894A4.37 4.37 0 0015 12c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V3z" />
-                                                    </svg>
+                                    return (
+                                        <div
+                                            key={song._id}
+                                            onClick={() => handleSongClick(song._id)}
+                                            className="animate-content-reveal bg-gray-800/40 hover:bg-gray-800/60 rounded flex items-center gap-4 overflow-hidden group cursor-pointer transition-colors relative"
+                                        >
+                                            <div className="relative flex-shrink-0">
+                                                {song.coverUrl ? (
+                                                    <img
+                                                        src={song.coverUrl}
+                                                        alt={song.title}
+                                                        className="w-20 h-20 object-cover"
+                                                    />
+                                                ) : (
+                                                    <div className="w-20  h-20 bg-gradient-to-br from-blue-500 to-black-500 flex items-center justify-center">
+                                                        <svg className="w-10 h-10 text-white/80" fill="currentColor" viewBox="0 0 20 20">
+                                                            <path d="M18 3a1 1 0 00-1.196-.98l-10 2A1 1 0 006 5v9.114A4.369 4.369 0 005 14c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V7.82l8-1.6v5.894A4.37 4.37 0 0015 12c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V3z" />
+                                                        </svg>
+                                                    </div>
+                                                )}
+
+                                                {/* Play/Pause Button Overlay */}
+                                                <Button
+                                                    variant="iconOverlay"
+                                                    size="icon"
+                                                    onClick={(e) => handlePlayPause(e, song)}
+                                                    className="w-full h-full"
+                                                >
+                                                    {isSongPlaying ? (
+                                                        <PauseIcon className="w-8 h-8 text-white drop-shadow-lg" />
+                                                    ) : (
+                                                        <PlayIcon className="w-8 h-8 text-white drop-shadow-lg" />
+                                                    )}
+                                                </Button>
+                                            </div>
+
+                                            <p className="text-white font-semibold text-sm truncate pr-4">
+                                                {song.title}
+                                            </p>
+
+                                            {/* Playing indicator */}
+                                            {isSongPlaying && (
+                                                <div className="absolute right-2 top-1/2 -translate-y-1/2">
+                                                    <div className="flex gap-0.5 items-end h-4">
+                                                        <div className="w-0.5 bg-green-500 animate-pulse" style={{ height: '60%' }}></div>
+                                                        <div className="w-0.5 bg-green-500 animate-pulse" style={{ height: '100%', animationDelay: '0.2s' }}></div>
+                                                        <div className="w-0.5 bg-green-500 animate-pulse" style={{ height: '80%', animationDelay: '0.4s' }}></div>
+                                                    </div>
                                                 </div>
                                             )}
-
-                                            {/* Play/Pause Button Overlay */}
-                                            <Button
-                                                variant="iconOverlay"
-                                                size="icon"
-                                                onClick={(e) => handlePlayPause(e, song)}
-                                                className="w-full h-full"
-                                            >
-                                                {isSongPlaying ? (
-                                                    <PauseIcon className="w-8 h-8 text-white drop-shadow-lg" />
-                                                ) : (
-                                                    <PlayIcon className="w-8 h-8 text-white drop-shadow-lg" />
-                                                )}
-                                            </Button>
                                         </div>
-
-                                        <p className="text-white font-semibold text-sm truncate pr-4">
-                                            {song.title}
-                                        </p>
-
-                                        {/* Playing indicator */}
-                                        {isSongPlaying && (
-                                            <div className="absolute right-2 top-1/2 -translate-y-1/2">
-                                                <div className="flex gap-0.5 items-end h-4">
-                                                    <div className="w-0.5 bg-green-500 animate-pulse" style={{ height: '60%' }}></div>
-                                                    <div className="w-0.5 bg-green-500 animate-pulse" style={{ height: '100%', animationDelay: '0.2s' }}></div>
-                                                    <div className="w-0.5 bg-green-500 animate-pulse" style={{ height: '80%', animationDelay: '0.4s' }}></div>
-                                                </div>
-                                            </div>
-                                        )}
-                                    </div>
-                                );
-                            })}
+                                    );
+                                })
+                            )}
 
                         </div>
 
@@ -156,12 +168,12 @@ const Homepage = () => {
 
                 {/* Made For Section */}
                 <div className="px-6 py-6">
-                    <MadeForUser />
+                    {isLoading ? <SectionSkeleton /> : <MadeForUser />}
                 </div>
 
                 {/* Jump Back In Section */}
                 <div className="px-6 py-6">
-                    <JumpBackIn />
+                    {isLoading ? <SectionSkeleton /> : <JumpBackIn />}
                 </div>
 
             </div>
