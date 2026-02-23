@@ -108,7 +108,7 @@ const JumpBackIn = () => {
                     className="flex gap-4 overflow-x-scroll scroll-smooth no-scrollbar"
                 >
                     {jumpBackIn.map((item) => (
-                        <div key={item.id} className="w-[180px] flex-shrink-0">
+                        <div key={item.id} className="w-[180px] shrink-0">
                             <PlaylistCard
                                 title={item.title}
                                 description={item.description}
