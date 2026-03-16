@@ -2,7 +2,7 @@
 import { useState } from "react";
 import useNotification from "../../hooks/useNotification";
 import { useNavigate } from "react-router-dom";
-import authService from "../../services/authService";
+import authService from "../../services/auth.service";
 import { IoEyeSharp, IoEyeOffSharp } from "react-icons/io5";
 import { UserPlus, User, Mail, Lock, ShieldCheck, CheckCircle, XCircle } from "lucide-react";
 
