@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { localStorageUtils } from './localStorage.utils';
 
 const axiosInstance = axios.create({
   baseURL: 'http://localhost:5000/api',

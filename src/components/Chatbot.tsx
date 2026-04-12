@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
-import chatbotService, { type ChatMessage } from '@/services/chatbot.service';
+import chatbotService from '@/services/chatbot.service';
+import type { ChatMessage } from '@/types';
 
 export default function Chatbot() {
     const [messages, setMessages] = useState<ChatMessage[]>([]);

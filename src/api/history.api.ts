@@ -1,4 +1,5 @@
 import axiosInstance from "./axiosConfig";
+import { API_ENDPOINTS, type ApiResponse } from "../../../shared/contracts";
 
 export interface ListenPositionData {
   songId: string;
@@ -38,7 +39,7 @@ export const updateListenPosition = async (
   songId: string,
   position: number
 ): Promise<ListenPositionData> => {
-  const response = await axiosInstance.post("/history/position", {
+  const response = await axiosInstance.post(API_ENDPOINTS.history.position, {
     songId,
     position,
   });
@@ -49,7 +50,7 @@ export const updateListenPosition = async (
 export const getListenPosition = async (
   songId: string
 ): Promise<ListenPositionData> => {
-  const response = await axiosInstance.get(`/history/position/${songId}`);
+  const response = await axiosInstance.get(API_ENDPOINTS.history.positionBySong(songId));
   return response.data.data;
 };
 
@@ -58,18 +59,18 @@ export const getListenHistory = async (
   page = 1,
   limit = 50
 ): Promise<ListenHistoryResponse> => {
-  const response = await axiosInstance.get("/history", {
+  const response = await axiosInstance.get<ApiResponse<ListenHistoryResponse>>(API_ENDPOINTS.history.list, {
     params: { page, limit },
   });
-  return response.data;
+  return response.data.data!;
 };
 
 // Xóa một bài khỏi lịch sử
 export const removeFromHistory = async (songId: string): Promise<void> => {
-  await axiosInstance.delete(`/history/${songId}`);
+  await axiosInstance.delete(API_ENDPOINTS.history.remove(songId));
 };
 
 // Xóa toàn bộ lịch sử
 export const clearHistory = async (): Promise<void> => {
-  await axiosInstance.delete("/history/clear/all");
+  await axiosInstance.delete(API_ENDPOINTS.history.clear);
 };

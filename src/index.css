@@ -226,3 +226,154 @@ code {
   writing-mode: vertical-rl;
   text-orientation: mixed;
 }
+
+/* ======== Skeleton shimmer ======== */
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 1.8s ease-in-out infinite;
+}
+
+/* ======== Content reveal (skeleton → real content) ======== */
+@keyframes contentReveal {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-content-reveal {
+  animation: contentReveal 0.5s ease-out forwards;
+}
+
+/* ======== Generic fade-in ======== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+/* Song Detail page animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes equalizer {
+  0%,
+  100% {
+    height: 30%;
+  }
+  50% {
+    height: 100%;
+  }
+}
+
+@keyframes heartBeat {
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.3);
+  }
+  50% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* ===== Auth Page Animations ===== */
+
+/* Card entrance animation */
+@keyframes authCardAppear {
+  0% {
+    opacity: 0;
+    transform: translateY(24px) scale(0.97);
+    filter: blur(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+.auth-card-appear {
+  animation: authCardAppear 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Floating particle base */
+@keyframes authFloat {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.15;
+  }
+  25% {
+    transform: translate(30px, -40px) scale(1.1);
+    opacity: 0.25;
+  }
+  50% {
+    transform: translate(-20px, -70px) scale(0.95);
+    opacity: 0.1;
+  }
+  75% {
+    transform: translate(40px, -30px) scale(1.05);
+    opacity: 0.2;
+  }
+}
+
+.auth-particle {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(3, 94, 140, 0.4) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.auth-particle-1 {
+  width: 300px;
+  height: 300px;
+  bottom: -60px;
+  left: 10%;
+  animation: authFloat 12s ease-in-out infinite;
+}
+
+.auth-particle-2 {
+  width: 200px;
+  height: 200px;
+  top: 15%;
+  right: 8%;
+  animation: authFloat 16s ease-in-out infinite 3s;
+}
+
+.auth-particle-3 {
+  width: 150px;
+  height: 150px;
+  top: 50%;
+  left: 5%;
+  animation: authFloat 20s ease-in-out infinite 6s;
+}

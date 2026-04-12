@@ -1,6 +1,7 @@
 import { useEffect, useRef, useCallback } from 'react';
 import { usePlayerStore, useAuthStore } from '../../store';
 import { useListenHistory } from '../../hooks/useListenHistory';
+import { API_ENDPOINTS } from '../../../../shared/contracts';
 import {
     PlayIcon,
     PauseIcon,
@@ -11,6 +12,10 @@ import {
 } from '@heroicons/react/24/solid';
 
 const Player = () => {
+    const rawBaseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+    const normalizedBaseUrl = rawBaseUrl.replace(/\/+$/, '').replace(/\/api$/, '');
+    const historyPositionUrl = `${normalizedBaseUrl}${API_ENDPOINTS.history.position}`;
+
     const {
         currentSong,
         isPlaying,
@@ -26,7 +31,7 @@ const Player = () => {
     } = usePlayerStore();
 
     const { isAuthenticated } = useAuthStore();
-    
+
     const {
         fetchSavedPosition,
         startPeriodicSync,
@@ -92,14 +97,14 @@ const Player = () => {
 
         if (isPlaying) {
             audio.play().catch(err => console.error('Error playing audio:', err));
-            
+
             // Bắt đầu sync định kỳ khi đang phát
             if (isAuthenticated) {
                 startPeriodicSync(currentSong._id, getCurrentPosition);
             }
         } else {
             audio.pause();
-            
+
             // Dừng sync và lưu vị trí hiện tại khi pause
             stopPeriodicSync();
             if (isAuthenticated && currentSong && audio.currentTime > 0) {
@@ -124,7 +129,7 @@ const Player = () => {
                     position: Math.floor(audioRef.current.currentTime),
                 });
                 navigator.sendBeacon(
-                    'http://localhost:5000/api/history/position',
+                    historyPositionUrl,
                     new Blob([data], { type: 'application/json' })
                 );
             }
@@ -139,7 +144,7 @@ const Player = () => {
             }
             stopPeriodicSync();
         };
-    }, [isAuthenticated, currentSong, saveImmediately, stopPeriodicSync]);
+    }, [isAuthenticated, currentSong, historyPositionUrl, saveImmediately, stopPeriodicSync]);
 
     // Audio event handlers
     const handleTimeUpdate = () => {
