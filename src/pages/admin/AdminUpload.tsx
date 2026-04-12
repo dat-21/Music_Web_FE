@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { Upload, Music, Image, X, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
-import { addSongApi } from '../../api/admin/Admin.api';
+import { addSongApi } from '../../api/admin/admin.api';
 
 const AdminUpload = () => {
     const [title, setTitle] = useState('');
@@ -62,7 +62,7 @@ const AdminUpload = () => {
             const res = await addSongApi(formData);
             setUploadResult({
                 success: true,
-                message: `"${res.data.song?.title || title}" uploaded successfully!`,
+                message: `"${res.data.data?.title || title}" uploaded successfully!`,
             });
             // Reset form
             setTitle('');

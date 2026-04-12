@@ -1,74 +1,34 @@
-import axiosInstance from '../api/axiosConfig';
-import type { LoginResponse, RegisterResponse, User } from '../types/auth.types';
-
+import { authApi } from '../api/auth.api';
+import { withApiError } from '../utils/apiError.utils';
+import type { UserDTO } from '../../../shared/contracts';
 
 class AuthService {
-    /**
-     * Đăng nhập (BE sẽ set cookie HttpOnly)
-     */
-    async login(username: string, password: string): Promise<User> {
-        try {
-            const res = await axiosInstance.post<LoginResponse>('/auth/login', {
-                username,
-                password,
-            });
+  async login(username: string, password: string): Promise<UserDTO> {
+    return withApiError(async () => {
+      const res = await authApi.login(username, password); 
+      return res.data.data!;
+    }, 'Đăng nhập thất bại');
+  }
 
-            // FE không lưu token — cookie đã được set bởi server
-            return res.data.user;
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } catch (err: any) {
-            throw new Error(err.response?.data?.message || 'Đăng nhập thất bại');
-        }
-    }
+  async signup(username: string, email: string, password: string, confirmPassword: string): Promise<UserDTO> {
+    return withApiError(async () => {
+      await authApi.register(username, email, password, confirmPassword);
+      return await this.login(username, password);
+    }, 'Đăng ký thất bại');
+  }
 
-    /**
-     * Đăng ký và tự đăng nhập (optional: bạn có thể tắt auto login)
-     */
-    async signup(username: string, email: string, password: string, confirmPassword: string): Promise<User> {
-        try {
-            const res = await axiosInstance.post<RegisterResponse>('/auth/register', {
-                username,
-                email,
-                password,
-                confirmPassword,
-            });
-            console.log(res);
-            
-            // Tự login sau khi đăng ký
-            const user = await this.login(username, password);
-            return user;
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } catch (err: any) {
-            throw new Error(err.response?.data?.message || 'Đăng ký thất bại');
-        }
-    }
+  async logout(): Promise<void> {
+    return withApiError(async () => {
+      await authApi.logout();
+    }, 'Đăng xuất thất bại');
+  }
 
-    /**
-     * Đăng xuất
-     * BE sẽ xoá cookie HttpOnly
-     */
-    async logout(): Promise<void> {
-        try {
-            await axiosInstance.post('/auth/logout');
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } catch (err: any) {
-            throw new Error(err.response?.data?.message || 'Đăng xuất thất bại');
-        }
-    }
-
-    /** 
-     * Lấy thông tin user hiện tại dựa trên cookie
-     * FE không cần lưu token, chỉ fetch /auth/me
-     */
-    async getProfile(): Promise<User> {
-        try {
-            const res = await axiosInstance.get('/auth/me');
-            return res.data.user;
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } catch (err: any) {
-            throw new Error(err.response?.data?.message || 'Không thể lấy thông tin người dùng');
-        }
-    }
+  async getProfile(): Promise<UserDTO> {
+    return withApiError(async () => {
+      const res = await authApi.me();
+      return res.data.data!;
+    }, 'Không thể lấy thông tin người dùng');
+  }
 }
 
 export default new AuthService();
