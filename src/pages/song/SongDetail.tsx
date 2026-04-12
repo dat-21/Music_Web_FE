@@ -6,6 +6,7 @@ import { usePlayerStore } from '../../store';
 import { PlayIcon, PauseIcon, ArrowLeftIcon, ClockIcon, MusicalNoteIcon } from '@heroicons/react/24/solid';
 import { HeartIcon, ShareIcon, EllipsisHorizontalIcon } from '@heroicons/react/24/outline';
 import { HeartIcon as HeartSolidIcon } from '@heroicons/react/24/solid';
+import { PageLoader } from '@/components/ui/page-loader/page-loader';
 
 const SongDetail = () => {
     const { id } = useParams<{ id: string }>();
@@ -28,8 +29,7 @@ const SongDetail = () => {
                 setLoading(true);
                 setImageLoaded(false);
                 const res = await getSongByIdApi(id);
-                const songData = res.data?.song || res.data;
-                setSong(songData);
+                setSong(res.data.data ?? null);
             } catch (error) {
                 console.error('Error fetching song detail:', error);
             } finally {
@@ -61,23 +61,7 @@ const SongDetail = () => {
     // Loading skeleton
     if (loading) {
         return (
-            <div className="min-h-screen bg-zinc-950 overflow-y-auto no-scrollbar pb-32">
-                <div className="bg-linear-to-b from-spotify-blue/40 via-spotify-blue/15 to-zinc-950 pb-8">
-                    <div className="px-6 pt-20 flex flex-col md:flex-row items-center md:items-end gap-8">
-                        <div className="w-56 h-56 md:w-64 md:h-64 rounded-lg bg-gray-800/60 animate-pulse shadow-2xl" />
-                        <div className="flex-1 space-y-4 w-full md:pb-2">
-                            <div className="h-4 w-16 bg-gray-800/60 rounded animate-pulse" />
-                            <div className="h-10 w-3/4 bg-gray-800/60 rounded animate-pulse" />
-                            <div className="h-5 w-1/3 bg-gray-800/60 rounded animate-pulse" />
-                            <div className="h-4 w-1/4 bg-gray-800/60 rounded animate-pulse" />
-                        </div>
-                    </div>
-                </div>
-                <div className="px-6 py-6 flex gap-6">
-                    <div className="w-14 h-14 rounded-full bg-gray-800/60 animate-pulse" />
-                    <div className="w-10 h-10 rounded-full bg-gray-800/60 animate-pulse" />
-                </div>
-            </div>
+            <PageLoader fullscreen={false} className="min-h-screen" message="Đang tải chi tiết bài hát..." />
         );
     }
 
