@@ -7,6 +7,7 @@ import { createTheme, MantineProvider } from "@mantine/core";
 import { Notifications } from "@mantine/notifications";
 import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
+import { ErrorBoundary } from "./components/common/ErrorBoundary";
 // ✅ Khai báo theme Mantine
 const theme = createTheme({
   primaryColor: "indigo",
@@ -16,12 +17,14 @@ const theme = createTheme({
 // ✅ Render React app
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <BrowserRouter>
-      <MantineProvider theme={theme} defaultColorScheme="light">
-        {/* ✅ Bắt buộc để Mantine Notifications hiển thị */}
-        <Notifications position="top-right" zIndex={9999} />
-        <App />
-      </MantineProvider>
-    </BrowserRouter>
+    <ErrorBoundary>
+      <BrowserRouter>
+        <MantineProvider theme={theme} defaultColorScheme="light">
+          {/* ✅ Bắt buộc để Mantine Notifications hiển thị */}
+          <Notifications position="top-right" zIndex={9999} />
+          <App />
+        </MantineProvider>
+      </BrowserRouter>
+    </ErrorBoundary>
   </StrictMode>
 );
