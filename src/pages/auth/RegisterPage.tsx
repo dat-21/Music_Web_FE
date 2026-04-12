@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import useNotification from "../../hooks/useNotification";
 import { useNavigate } from "react-router-dom";
-import authService from "../../services/authService";
+import authService from "../../services/auth.service";
 import { IoEyeSharp, IoEyeOffSharp } from "react-icons/io5";
 import { UserPlus, User, Mail, Lock, ShieldCheck, CheckCircle, XCircle } from "lucide-react";
 
@@ -56,7 +55,7 @@ const RegisterPage = () => {
             const successMessage =
                 typeof result === "string"
                     ? result
-                    : (result as any)?.message ?? "Đăng Kí Thành Công!"
+                    : (result as unknown as { message: string })?.message ?? "Đăng Kí Thành Công!"
 
             showSuccess(successMessage)
             setSuccess(true)
@@ -64,7 +63,7 @@ const RegisterPage = () => {
                 navigate("/login");
             }, 2000);
         } catch (error) {
-            const errorMessage = (error as any).message || "Đăng Kí Không Thành Công!"
+            const errorMessage = (error as unknown as { message: string }).message || "Đăng Kí Không Thành Công!"
             showError(errorMessage)
             setSuccess(false);
         }

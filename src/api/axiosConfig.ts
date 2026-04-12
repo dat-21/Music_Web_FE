@@ -1,7 +1,11 @@
 import axios from 'axios';
+import { API_ENDPOINTS } from '../../../shared/contracts';
+
+const rawBaseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+const normalizedBaseUrl = rawBaseUrl.replace(/\/+$/, '').replace(/\/api$/, '');
 
 const axiosInstance = axios.create({
-    baseURL: 'http://localhost:5000/api',
+    baseURL: normalizedBaseUrl || API_ENDPOINTS.base.api,
     withCredentials: true,   // 🔥 CHO PHÉP GỬI COOKIE
     timeout: 10000,
     headers: {

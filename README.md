@@ -1,75 +1,87 @@
-# React + TypeScript + Vite
+# Music Web - Frontend (FE)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 🎨 Giới thiệu dự án
+Giao diện người dùng (UI) hiện đại và tương tác cao cho nền tảng nghe nhạc trực tuyến. Dự án tập trung vào trải nghiệm người dùng mượt mà, thiết kế sang trọng và tích hợp nhiều công nghệ hiển thị tiên tiến.
 
-Currently, two official plugins are available:
+## 🚀 Công nghệ sử dụng
+Dự án sử dụng bộ công nghệ (Tech Stack) mạnh mẽ nhất hiện nay:
+- **Framework:** React 19 (với TypeScript)
+- **Công cụ build:** Vite (siêu nhanh)
+- **Quản lý trạng thái:** Zustand (nhẹ nhàng, hiệu quả)
+- **Data Fetching:** TanStack Query (React Query)
+- **Styling & UI:**
+    - **Tailwind CSS v4:** Styling cực nhanh và hiện đại.
+    - **Mantine UI & Material UI (MUI):** Thư viện component phong phú.
+    - **Shadcn UI:** Custom components linh hoạt.
+    - **Lucide & Tabler Icons:** Bộ icon đẹp mắt.
+- **Trải nghiệm hình ảnh:** Three.js & React Three Fiber (cho các hiệu ứng 3D).
+- **Quản lý Form:** React Hook Form & Zod.
+- **Đa ngôn ngữ:** i18next (hỗ trợ nhiều ngôn ngữ).
+- **Thông báo:** React Hot Toast & Mantine Notifications.
+- **Routing:** React Router DOM (v7).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Các tính năng đặc sắc
+- **Giao diện nghe nhạc hiện đại:** Trình phát nhạc chất lượng cao với thanh điều hướng, điều khiển âm lượng và chế độ lặp.
+- **Trang chủ sống động:** Hiển thị danh sách bài hát mới nhất, nghệ sĩ nổi tiếng và danh sách phát theo xu hướng.
+- **AI Chatbot Interface:** Giao diện trò chuyện thông minh tích hợp trực tiếp với Gemini AI để hỗ trợ người dùng.
+- **Quản lý cá nhân:** Xem lịch sử nghe nhạc, quản lý danh sách yêu thích và hồ sơ cá nhân.
+- **Hệ thống Quản trị (Admin Dashboard):**
+    - Biểu đồ thống kê.
+    - Quản lý danh sách bài hát, album và nghệ sĩ.
+    - Duyệt người dùng và phân quyền.
+- **Hiệu ứng 3D:** Tích hợp Three.js cho các phần trang trí hoặc trình visualizer nhạc (tùy chọn).
+- **Thiết kế Responsive:** Tương thích hoàn hảo trên mọi thiết bị từ Desktop đến Mobile.
 
-## React Compiler
-
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
-
-Note: This will impact Vite dev & build performances.
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 📁 Cấu trúc thư mục
+```text
+src/
+├── api/            # Cấu hình kết nối API
+├── components/     # Các thành phần giao diện dùng chung (Button, Card, Input...)
+├── config/         # Cấu hình dự án (Constants, Env)
+├── hooks/          # Các custom hooks hữu ích
+├── layouts/        # Bố cục trang (MainLayout, AuthLayout, AdminLayout)
+├── lib/            # Cấu hình các thư viện bên thứ ba (lucide, utils)
+├── pages/          # Các trang chính (Homepage, Login, AdminDashboard...)
+├── routes/         # Cấu hình định tuyến với React Router
+├── services/       # Xử lý gọi API và logic nghiệp vụ frontend
+├── store/          # Quản lý trạng thái global với Zustand
+├── theme/          # Cấu hình màu sắc, font chữ và theme Material/Mantine
+├── types/          # Định nghĩa các interface/type TypeScript
+└── App.tsx        # Thành phần gốc của ứng dụng
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🛠️ Hướng dẫn cài đặt
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### 1. Yêu cầu hệ thống
+- Node.js (phiên bản 18 trở lên)
+- NPM hoặc Yarn
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### 2. Các bước cài đặt
+1. **Clone dự án:**
+   ```bash
+   git clone <repo-url>
+   cd frontend
+   ```
+2. **Cài đặt thư viện:**
+   ```bash
+   npm install
+   ```
+3. **Cấu hình môi trường:**
+   Tạo tệp `.env` tại thư mục gốc:
+   ```env
+   VITE_API_BASE_URL=http://localhost:5000/api
+   ```
+4. **Chạy dự án:**
+   ```bash
+   npm run dev
+   ```
+   Ứng dụng sẽ chạy tại: `http://localhost:5173`
+
+## 🌟 Trải nghiệm người dùng
+Dự án được chăm chút tỉ mỉ về phần nhìn với:
+- **Hiệu ứng mờ (Glassmorphism):** Mang lại cảm giác cao cấp.
+- **Micro-animations:** Các chuyển động nhỏ khi hover hoặc click.
+- **Dark Mode:** Mặc định được thiết kế thân thiện với mắt.
+
+---
+*Giao diện đang được nâng cấp liên tục để mang lại trải nghiệm âm nhạc tốt nhất.*

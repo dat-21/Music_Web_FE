@@ -29,7 +29,7 @@ const Homepage = () => {
         const fetchSongs = async () => {
             try {
                 const res = await getAllSongsApi();
-                setSongs(res.data.songs || []);
+                setSongs(res.data.data?.songs || []);
             } catch (error) {
                 console.error("Lỗi khi fetch danh sách bài hát", error);
             } finally {
@@ -61,12 +61,6 @@ const Homepage = () => {
     const songsToShow = songs.slice(0, 8); // Giới hạn 8 songs cho phần featured
     // const rowCount = Math.ceil(songsToShow.length / 4); // Số hàng trên desktop
 
-    // // Gradient height động: mỗi hàng ~88px (card 80px + gap), thêm padding
-    // const getGradientHeight = () => {
-    //     if (songsToShow.length === 0) return 'auto';
-    //     if (songsToShow.length <= 4) return 'auto'; // 1 hàng
-    //     return 'auto'; // 2 hàng
-    // };
 
     return (
         <>

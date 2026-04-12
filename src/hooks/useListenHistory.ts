@@ -35,8 +35,8 @@ export const useListenHistory = (
   const { isAuthenticated } = useAuthStore();
   
   // Refs để theo dõi state
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
-  const debounceRef = useRef<NodeJS.Timeout | null>(null);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const lastSavedPositionRef = useRef<number>(0);
   const lastSavedTimeRef = useRef<number>(0);
   const isSavingRef = useRef<boolean>(false);
