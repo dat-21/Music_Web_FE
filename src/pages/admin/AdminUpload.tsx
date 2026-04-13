@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { Upload, Music, Image, X, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
-import { addSongApi } from '../../api/admin/admin.api';
+import { addSongApi } from '../../api/admin/Admin.api';
 
 const AdminUpload = () => {
     const [title, setTitle] = useState('');
