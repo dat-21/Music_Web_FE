@@ -5,25 +5,20 @@ import type { Song } from '../types';
 import MadeForUser from '../components/homepage/MadeForUser';
 import JumpBackIn from '../components/homepage/JumpBackIn';
 import { usePlayerStore } from '../store';
-import { PlayIcon, PauseIcon } from '@heroicons/react/24/solid';
-import { Button } from '../components/ui/button';
+import { FaPlay, FaPause, FaArrowRight } from 'react-icons/fa';
 import SongCardSkeleton from '../components/skeletons/SongCardSkeleton';
 import SectionSkeleton from '../components/skeletons/SectionSkeleton';
-
-
-
+import { MoodWheel } from '../components/mood/MoodWheel';
 
 const Homepage = () => {
     const [songs, setSongs] = useState<Song[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const navigate = useNavigate();
 
-    // Subscribe chỉ những state cần thiết, không subscribe currentTime/volume/duration
-    const currentSong = usePlayerStore((state) => state.currentSong);
-    const isPlaying = usePlayerStore((state) => state.isPlaying);
-    const setCurrentSong = usePlayerStore((state) => state.setCurrentSong);
-    const togglePlay = usePlayerStore((state) => state.togglePlay);
-
+    const currentSong    = usePlayerStore(s => s.currentSong);
+    const isPlaying      = usePlayerStore(s => s.isPlaying);
+    const setCurrentSong = usePlayerStore(s => s.setCurrentSong);
+    const togglePlay     = usePlayerStore(s => s.togglePlay);
 
     useEffect(() => {
         const fetchSongs = async () => {
@@ -31,147 +26,219 @@ const Homepage = () => {
                 const res = await getAllSongsApi();
                 setSongs(res.data.data?.songs || []);
             } catch (error) {
-                console.error("Lỗi khi fetch danh sách bài hát", error);
+                console.error("Error fetching songs", error);
             } finally {
                 setIsLoading(false);
             }
         };
-
         fetchSongs();
     }, []);
 
     const handlePlayPause = useCallback((e: React.MouseEvent, song: Song) => {
         e.stopPropagation();
-
-        if (currentSong?._id === song._id) {
-            togglePlay();
-        } else {
-            setCurrentSong(song);
-        }
+        if (currentSong?._id === song._id) togglePlay();
+        else setCurrentSong(song);
     }, [currentSong, togglePlay, setCurrentSong]);
 
     const handleSongClick = useCallback((songId: string) => {
         navigate(`/song/${songId}`);
     }, [navigate]);
 
-    // Xoá console.log này để tránh log mỗi lần re-render
-    // console.log(songs);
-
-    // Tính toán số hàng dựa trên số lượng songs (4 cột trên lg, 2 cột trên mobile)
-    const songsToShow = songs.slice(0, 8); // Giới hạn 8 songs cho phần featured
-    // const rowCount = Math.ceil(songsToShow.length / 4); // Số hàng trên desktop
-
+    const featured = songs.slice(0, 8);
+    const discover = songs.slice(8, 16);
 
     return (
-        <>
-            {/* Main Scrollable Content */}
-            <div className="flex-1 overflow-y-auto bg-zinc-950 no-scrollbar">
-                {/* Navigation Tabs Section with Gradient - Spotify style */}
-                <div
-                    className={`bg-gradient-to-b from-spotify-blue/50 via-spotify-blue/20 to-zinc-950 pt-4 ${songsToShow.length <= 4 ? 'pb-4 via-60%' : 'pb-6 via-50%'
-                        }`}
-                >
-                    <div className="px-4 md:px-6 pb-2">
-                        <div className="flex gap-2">
-                            <Button variant="pillActive" size="pill">
-                                All
-                            </Button>
-                            <Button variant="pill" size="pill">
-                                Music
-                            </Button>
-                            <Button variant="pill" size="pill">
-                                Podcasts
-                            </Button>
-                        </div>
+        <div className="w-full">
+
+            {/* ═══════════════════════════════════════
+                HERO: Mood Wheel
+            ═══════════════════════════════════════ */}
+            <section className="relative w-full pt-2 pb-4 overflow-hidden">
+                {/* Hero glow */}
+                <div className="absolute top-[-80px] left-1/2 -translate-x-1/2 w-[700px] h-[400px] rounded-full pointer-events-none"
+                     style={{ background: 'radial-gradient(ellipse, rgba(0,229,255,0.08) 0%, transparent 65%)' }} />
+                <p className="label-neon text-center mb-1">Your vibe, your universe</p>
+                <h2 className="text-3xl md:text-4xl font-black text-center text-white mb-0">
+                    How are you feeling?
+                </h2>
+                <MoodWheel />
+            </section>
+
+            {/* ═══════════════════════════════════════
+                TRENDING
+            ═══════════════════════════════════════ */}
+            <section className="relative w-full px-6 md:px-10 mt-2 mb-14">
+                {/* Section glow */}
+                <div className="absolute top-0 left-1/4 w-[400px] h-[300px] rounded-full pointer-events-none -z-10"
+                     style={{ background: 'radial-gradient(circle, rgba(0,229,255,0.04) 0%, transparent 60%)' }} />
+
+                <div className="flex items-center justify-between mb-5">
+                    <div>
+                        <p className="label-neon mb-1">From the cosmos</p>
+                        <h3 className="section-heading">Trending Now</h3>
                     </div>
+                    <button className="flex items-center gap-2 text-[10px] font-bold text-white/30 hover:text-[#00e5ff] transition-colors tracking-[0.2em] uppercase">
+                        See all <FaArrowRight size={9} />
+                    </button>
+                </div>
 
-                    {/* Featured Playlists Grid */}
-                    <div className="px-4 md:px-6 pt-3">
-                        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                    {isLoading ? (
+                        Array.from({ length: 8 }).map((_, i) => <SongCardSkeleton key={i} />)
+                    ) : (
+                        featured.map((song, idx) => {
+                            const active  = currentSong?._id === song._id;
+                            const playing = active && isPlaying;
 
-                            {isLoading ? (
-                                // Skeleton loading cho featured songs
-                                Array.from({ length: 8 }).map((_, i) => (
-                                    <SongCardSkeleton key={i} />
-                                ))
-                            ) : (
-                                songsToShow.map((song) => {
-                                    const isCurrentSong = currentSong?._id === song._id;
-                                    const isSongPlaying = isCurrentSong && isPlaying;
-
-                                    return (
-                                        <div
-                                            key={song._id}
-                                            onClick={() => handleSongClick(song._id)}
-                                            className="animate-content-reveal bg-gray-800/40 hover:bg-gray-800/60 rounded flex items-center gap-4 overflow-hidden group cursor-pointer transition-colors relative"
-                                        >
-                                            <div className="relative flex-shrink-0">
-                                                {song.coverUrl ? (
-                                                    <img
-                                                        src={song.coverUrl}
-                                                        alt={song.title}
-                                                        className="w-20 h-20 object-cover"
-                                                    />
-                                                ) : (
-                                                    <div className="w-20  h-20 bg-gradient-to-br from-blue-500 to-black-500 flex items-center justify-center">
-                                                        <svg className="w-10 h-10 text-white/80" fill="currentColor" viewBox="0 0 20 20">
-                                                            <path d="M18 3a1 1 0 00-1.196-.98l-10 2A1 1 0 006 5v9.114A4.369 4.369 0 005 14c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V7.82l8-1.6v5.894A4.37 4.37 0 0015 12c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V3z" />
-                                                        </svg>
-                                                    </div>
-                                                )}
-
-                                                {/* Play/Pause Button Overlay */}
-                                                <Button
-                                                    variant="iconOverlay"
-                                                    size="icon"
-                                                    onClick={(e) => handlePlayPause(e, song)}
-                                                    className="w-full h-full"
-                                                >
-                                                    {isSongPlaying ? (
-                                                        <PauseIcon className="w-8 h-8 text-white drop-shadow-lg" />
-                                                    ) : (
-                                                        <PlayIcon className="w-8 h-8 text-white drop-shadow-lg" />
-                                                    )}
-                                                </Button>
+                            return (
+                                <div
+                                    key={song._id}
+                                    onClick={() => handleSongClick(song._id)}
+                                    className="glass-card p-3.5 flex items-center gap-4 cursor-pointer group"
+                                    style={{
+                                        animationDelay: `${idx * 60}ms`,
+                                        ...(active ? {
+                                            borderColor: 'rgba(0,229,255,0.25)',
+                                            boxShadow: '0 0 40px rgba(0,229,255,0.12), 0 4px 20px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(0,229,255,0.15)',
+                                        } : {}),
+                                    }}
+                                >
+                                    {/* Artwork */}
+                                    <div className="relative w-14 h-14 rounded-xl overflow-hidden shrink-0 ring-1 ring-white/8">
+                                        {song.coverUrl ? (
+                                            <img
+                                                src={song.coverUrl}
+                                                alt={song.title}
+                                                className={`w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 ${playing ? 'animate-orbit-slow' : ''}`}
+                                                style={{
+                                                    borderRadius: playing ? '50%' : '12px',
+                                                    transition: 'border-radius 0.5s',
+                                                }}
+                                            />
+                                        ) : (
+                                            <div className="w-full h-full flex items-center justify-center"
+                                                 style={{ background: 'linear-gradient(135deg, rgba(0,229,255,0.15), rgba(179,136,255,0.15))' }}>
+                                                <span className="text-[10px] font-bold text-white/20">♪</span>
                                             </div>
+                                        )}
+                                        <button
+                                            onClick={e => handlePlayPause(e, song)}
+                                            className={`absolute inset-0 flex items-center justify-center transition-all duration-300 ${playing ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
+                                            style={{ background: 'rgba(5,7,15,0.50)', backdropFilter: 'blur(4px)' }}
+                                        >
+                                            {playing
+                                                ? <FaPause size={16} style={{ color: '#00e5ff', filter: 'drop-shadow(0 0 6px rgba(0,229,255,0.7))' }} />
+                                                : <FaPlay  size={16} className="text-white/90 ml-0.5" />
+                                            }
+                                        </button>
+                                    </div>
 
-                                            <p className="text-white font-semibold text-sm truncate pr-4">
-                                                {song.title}
-                                            </p>
+                                    {/* Info */}
+                                    <div className="flex-1 min-w-0">
+                                        <p className="text-sm font-semibold text-white truncate">{song.title}</p>
+                                        <p className="text-xs text-white/50 truncate mt-0.5">{song.artist}</p>
+                                    </div>
 
-                                            {/* Playing indicator */}
-                                            {isSongPlaying && (
-                                                <div className="absolute right-2 top-1/2 -translate-y-1/2">
-                                                    <div className="flex gap-0.5 items-end h-4">
-                                                        <div className="w-0.5 bg-green-500 animate-pulse" style={{ height: '60%' }}></div>
-                                                        <div className="w-0.5 bg-green-500 animate-pulse" style={{ height: '100%', animationDelay: '0.2s' }}></div>
-                                                        <div className="w-0.5 bg-green-500 animate-pulse" style={{ height: '80%', animationDelay: '0.4s' }}></div>
-                                                    </div>
-                                                </div>
-                                            )}
+                                    {/* Equalizer */}
+                                    {playing && (
+                                        <div className="flex gap-[3px] items-end h-4 shrink-0 mr-1">
+                                            <div className="w-[3px] rounded-full bg-[#00e5ff] animate-eq"   style={{ height: '55%', boxShadow: '0 0 6px #00e5ff' }} />
+                                            <div className="w-[3px] rounded-full bg-[#00e5ff] animate-eq-2" style={{ height: '100%', boxShadow: '0 0 6px #00e5ff' }} />
+                                            <div className="w-[3px] rounded-full bg-[#b388ff] animate-eq-3" style={{ height: '70%', boxShadow: '0 0 6px #b388ff' }} />
+                                            <div className="w-[3px] rounded-full bg-[#00e5ff] animate-eq-4" style={{ height: '85%', boxShadow: '0 0 6px #00e5ff' }} />
                                         </div>
-                                    );
-                                })
-                            )}
+                                    )}
+                                </div>
+                            );
+                        })
+                    )}
+                </div>
+            </section>
 
+            {/* ═══════════════════════════════════════
+                MADE FOR YOU
+            ═══════════════════════════════════════ */}
+            <section className="px-6 md:px-10 mb-12">
+                <div className="mb-5">
+                    <p className="label-neon mb-1">Curated for you</p>
+                    <h3 className="section-heading">Your Constellation</h3>
+                </div>
+                {isLoading ? <SectionSkeleton /> : <MadeForUser />}
+            </section>
+
+            {/* ═══════════════════════════════════════
+                JUMP BACK IN
+            ═══════════════════════════════════════ */}
+            <section className="px-6 md:px-10 mb-14">
+                <div className="mb-5">
+                    <p className="label-neon mb-1">Continue the journey</p>
+                    <h3 className="section-heading">Jump Back In</h3>
+                </div>
+                {isLoading ? <SectionSkeleton /> : <JumpBackIn />}
+            </section>
+
+            {/* ═══════════════════════════════════════
+                DISCOVER
+            ═══════════════════════════════════════ */}
+            {discover.length > 0 && (
+                <section className="px-6 md:px-10 mb-24">
+                    {/* Section glow */}
+                    <div className="absolute right-[10%] w-[300px] h-[300px] rounded-full pointer-events-none -z-10"
+                         style={{ background: 'radial-gradient(circle, rgba(179,136,255,0.04) 0%, transparent 60%)' }} />
+
+                    <div className="flex items-center justify-between mb-5">
+                        <div>
+                            <p className="label-neon mb-1">Explore the unknown</p>
+                            <h3 className="section-heading">Discover New Vibes</h3>
                         </div>
-
+                        <button className="flex items-center gap-2 text-[10px] font-bold text-white/30 hover:text-[#00e5ff] transition-colors tracking-[0.2em] uppercase">
+                            Explore <FaArrowRight size={9} />
+                        </button>
                     </div>
-                </div>
 
-
-                {/* Made For Section */}
-                <div className="px-6 py-6">
-                    {isLoading ? <SectionSkeleton /> : <MadeForUser />}
-                </div>
-
-                {/* Jump Back In Section */}
-                <div className="px-6 py-6">
-                    {isLoading ? <SectionSkeleton /> : <JumpBackIn />}
-                </div>
-
-            </div>
-        </>
+                    <div className="flex gap-4 overflow-x-auto no-scrollbar pb-4">
+                        {discover.map(song => {
+                            const active  = currentSong?._id === song._id;
+                            const playing = active && isPlaying;
+                            return (
+                                <div
+                                    key={song._id}
+                                    onClick={() => handleSongClick(song._id)}
+                                    className="glass-card shrink-0 w-44 p-3.5 cursor-pointer group"
+                                >
+                                    <div className="relative w-full aspect-square rounded-xl overflow-hidden mb-3 ring-1 ring-white/6">
+                                        {song.coverUrl ? (
+                                            <img src={song.coverUrl} alt={song.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                                        ) : (
+                                            <div className="w-full h-full flex items-center justify-center"
+                                                 style={{ background: 'linear-gradient(135deg, rgba(179,136,255,0.20), rgba(255,64,129,0.15))' }}>
+                                                <span className="text-2xl text-white/15">♪</span>
+                                            </div>
+                                        )}
+                                        <button
+                                            onClick={e => handlePlayPause(e, song)}
+                                            className={`absolute bottom-2 right-2 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110
+                                                ${playing ? 'opacity-100' : 'opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0'}
+                                            `}
+                                            style={{
+                                                background: 'linear-gradient(135deg, #00e5ff, #2979ff)',
+                                                color: '#05070f',
+                                                boxShadow: '0 0 20px rgba(0,229,255,0.4)',
+                                            }}
+                                        >
+                                            {playing ? <FaPause size={13} /> : <FaPlay size={13} className="ml-0.5" />}
+                                        </button>
+                                    </div>
+                                    <p className="text-sm font-semibold text-white truncate">{song.title}</p>
+                                    <p className="text-[10px] text-white/40 truncate mt-1 uppercase tracking-[0.15em]">{song.artist}</p>
+                                </div>
+                            );
+                        })}
+                    </div>
+                </section>
+            )}
+        </div>
     );
-}
+};
+
 export default Homepage;

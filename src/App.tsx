@@ -1,8 +1,8 @@
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { Fragment, Suspense, useEffect } from 'react';
 import { PublicRoutes } from './routes/AppRoutes';
-import DefaultLayout from './layouts/DefaultLayout';
-import Player from './components/layouts/Player';
+import FloatingLayout from './layouts/FloatingLayout';
+import PlayerEngine from './components/layouts/Player';
 import ErrorPage from './pages/ErrorPage';
 import { useAuthStore } from './store/auth.store';
 import { PageLoader } from './components/ui/page-loader/page-loader';
@@ -27,7 +27,7 @@ function App() {
   // Toàn trang — khi app đang check auth
   if (isLoading) return <PageLoader />;
 
-  // Player chỉ hiện trên các trang có DefaultLayout (trang chính), ẩn ở login/register/etc.
+  // Player chỉ hiện trên các trang có layout (trang chính), ẩn ở login/register/etc.
   const showPlayer = PublicRoutes.some(route => {
     const matches = matchesRoutePath(route.path, location.pathname);
     return matches && route.layout !== null;
@@ -36,7 +36,7 @@ function App() {
   return (
     <ErrorBoundary>
       <div className="App">
-        <Suspense fallback={<PageLoader fullscreen={false} className="min-h-screen" />}>
+        <Suspense fallback={<PageLoader fullscreen={false} className="min-h-screen bg-black" />}>
           <Routes>
             {PublicRoutes.map((route, index) => {
               const Page = route.component;
@@ -45,7 +45,7 @@ function App() {
               if (Layout === null) {
                 Layout = Fragment;
               } else if (!Layout) {
-                Layout = DefaultLayout;
+                Layout = FloatingLayout;
               }
 
               return (
@@ -93,10 +93,10 @@ function App() {
           </Routes>
         </Suspense>
 
-        {/* Global Music Player - chỉ hiện trên trang chính (có layout) */}
+        {/* Global Invisible Audio Engine */}
         {showPlayer && (
           <ErrorBoundary fallback={null}>
-            <Player />
+            <PlayerEngine />
           </ErrorBoundary>
         )}
       </div>
