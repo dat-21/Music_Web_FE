@@ -1,6 +1,6 @@
 import { lazy } from 'react';
 import config from '../config';
-import DefaultLayout from '../layouts/DefaultLayout';
+import FloatingLayout from '../layouts/FloatingLayout';
 import AdminLayout from '../layouts/AdminLayout';
 
 
@@ -18,10 +18,10 @@ const AdminUsers = lazy(() => import('../pages/admin/AdminUsers'));
 
 
 const PublicRoutes = [
-    { path: config.routes.home, component: Homepage, layout: DefaultLayout },
+    { path: config.routes.home, component: Homepage, layout: FloatingLayout },
     { path: config.routes.login, component: LoginPage, layout: null },
     { path: config.routes.register, component: RegisterPage, layout: null },
-    { path: config.routes.song, component: SongDetail, layout: DefaultLayout },
+    { path: config.routes.song, component: SongDetail, layout: FloatingLayout },
     { path: config.routes.shadcnDemo, component: ShadcnDemo, layout: null },
 
     // Admin routes

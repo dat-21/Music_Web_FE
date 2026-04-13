@@ -8,6 +8,7 @@ interface PlayerState {
     volume: number;
     currentTime: number; 
     duration: number;
+    seekPosition: number | null;
     
     // Actions
     setCurrentSong: (song: Song) => void;
@@ -17,6 +18,7 @@ interface PlayerState {
     setVolume: (volume: number) => void;
     setCurrentTime: (time: number) => void;
     setDuration: (duration: number) => void;
+    seek: (time: number) => void;
     reset: () => void;
 }
 
@@ -28,6 +30,7 @@ export const usePlayerStore = create<PlayerState>()(
             volume: 1,
             currentTime: 0,
             duration: 0,
+            seekPosition: null,
 
             setCurrentSong: (song) => set({ currentSong: song, isPlaying: true, currentTime: 0 }),
             play: () => set({ isPlaying: true }),
@@ -36,7 +39,8 @@ export const usePlayerStore = create<PlayerState>()(
             setVolume: (volume) => set({ volume }),
             setCurrentTime: (time) => set({ currentTime: time }),
             setDuration: (duration) => set({ duration }),
-            reset: () => set({ currentSong: null, isPlaying: false, currentTime: 0, duration: 0 }),
+            seek: (time) => set({ seekPosition: time }),
+            reset: () => set({ currentSong: null, isPlaying: false, currentTime: 0, duration: 0, seekPosition: null }),
         }),
         {
             name: 'music-player-storage', // localStorage key
