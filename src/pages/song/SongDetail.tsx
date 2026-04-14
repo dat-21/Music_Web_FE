@@ -113,8 +113,8 @@ const SongDetail = () => {
                         <button onClick={handlePlayPause}
                             className="absolute inset-0 bg-black/0 group-hover:bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
                             <div className="w-16 h-16 rounded-full flex items-center justify-center hover:scale-110 transition-transform"
-                                 style={{ background: '#00e5ff', boxShadow: '0 0 40px rgba(0,229,255,0.5)' }}>
-                                {isSongPlaying ? <FaPause size={24} className="text-[#05070f]" /> : <FaPlay size={24} className="text-[#05070f] ml-1" />}
+                                 style={{ background: 'var(--color-accent-neon)', boxShadow: '0 0 40px rgba(0,229,255,0.5)' }}>
+                                {isSongPlaying ? <FaPause size={24} className="text-[var(--color-bg-primary)]" /> : <FaPlay size={24} className="text-[var(--color-bg-primary)] ml-1" />}
                             </div>
                         </button>
                     </div>
@@ -152,7 +152,7 @@ const SongDetail = () => {
 
                 <button onClick={() => setIsLiked(!isLiked)}
                     className={`w-11 h-11 rounded-full glass-card flex items-center justify-center transition-all duration-300 hover:scale-110 ${isLiked ? '' : 'text-white/30 hover:text-white'}`}
-                    style={isLiked ? { color: '#ff4081', boxShadow: '0 0 20px rgba(255,64,129,0.3)' } : {}}>
+                    style={isLiked ? { color: 'var(--color-accent-love)', boxShadow: '0 0 20px rgba(255,64,129,0.3)' } : {}}>
                     {isLiked ? <FaHeart size={18} /> : <FaRegHeart size={18} />}
                 </button>
 
@@ -165,12 +165,12 @@ const SongDetail = () => {
 
                 {isSongPlaying && (
                     <div className="ml-auto flex items-center gap-2.5">
-                        <span className="text-xs font-bold tracking-[0.2em] uppercase" style={{ color: '#00e5ff', textShadow: '0 0 10px rgba(0,229,255,0.5)' }}>Now Playing</span>
+                        <span className="text-xs font-bold tracking-[0.2em] uppercase" style={{ color: 'var(--color-accent-neon)', textShadow: '0 0 10px rgba(0,229,255,0.5)' }}>Now Playing</span>
                         <div className="flex gap-[3px] items-end h-4">
-                            <div className="w-[3px] rounded-full bg-[#00e5ff] animate-eq"   style={{ height: '55%', boxShadow: '0 0 6px #00e5ff' }} />
-                            <div className="w-[3px] rounded-full bg-[#00e5ff] animate-eq-2" style={{ height: '100%', boxShadow: '0 0 6px #00e5ff' }} />
-                            <div className="w-[3px] rounded-full bg-[#00e5ff] animate-eq-3" style={{ height: '50%', boxShadow: '0 0 6px #00e5ff' }} />
-                            <div className="w-[3px] rounded-full bg-[#00e5ff] animate-eq-4" style={{ height: '80%', boxShadow: '0 0 6px #00e5ff' }} />
+                            <div className="w-[3px] rounded-full bg-[var(--color-accent-neon)] animate-eq"   style={{ height: '55%', boxShadow: '0 0 6px var(--color-accent-neon)' }} />
+                            <div className="w-[3px] rounded-full bg-[var(--color-accent-neon)] animate-eq-2" style={{ height: '100%', boxShadow: '0 0 6px var(--color-accent-neon)' }} />
+                            <div className="w-[3px] rounded-full bg-[var(--color-accent-neon)] animate-eq-3" style={{ height: '50%', boxShadow: '0 0 6px var(--color-accent-neon)' }} />
+                            <div className="w-[3px] rounded-full bg-[var(--color-accent-neon)] animate-eq-4" style={{ height: '80%', boxShadow: '0 0 6px var(--color-accent-neon)' }} />
                         </div>
                     </div>
                 )}
@@ -180,7 +180,7 @@ const SongDetail = () => {
             {song.genres && song.genres.length > 0 && (
                 <div className="flex flex-wrap gap-2 mb-10">
                     {song.genres.map((genre, i) => (
-                        <span key={i} className="glass-card px-4 py-1.5 text-xs font-semibold text-white/50 hover:text-[#00e5ff] hover:border-[rgba(0,229,255,0.2)] transition-all cursor-pointer">
+                        <span key={i} className="glass-card px-4 py-1.5 text-xs font-semibold text-white/50 hover:text-[var(--color-accent-neon)] hover:border-[rgba(0,229,255,0.2)] transition-all cursor-pointer">
                             {genre}
                         </span>
                     ))}
@@ -194,7 +194,7 @@ const SongDetail = () => {
                     {infoCards.map((card, i) => (
                         <div key={i} className="glass-card p-4 group">
                             <div className="flex items-center gap-2 mb-2">
-                                <span className="text-white/15 group-hover:text-[#00e5ff]/50 transition-colors">{card.icon}</span>
+                                <span className="text-white/15 group-hover:text-[var(--color-accent-neon)]/50 transition-colors">{card.icon}</span>
                                 <p className="text-[10px] font-bold text-white/30 uppercase tracking-[0.15em]">{card.label}</p>
                             </div>
                             <p className="text-white font-semibold text-sm truncate">{card.value}</p>

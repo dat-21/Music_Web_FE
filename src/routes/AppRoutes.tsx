@@ -5,7 +5,12 @@ import AdminLayout from '../layouts/AdminLayout';
 
 
 const LoginPage = lazy(() => import('../pages/auth/LoginPage'));
+const LandingPage = lazy(() => import('../pages/LandingPage'));
 const Homepage = lazy(() => import('../pages/Homepage'));
+const SearchPage = lazy(() => import('../pages/SearchPage'));
+const LibraryPage = lazy(() => import('../pages/LibraryPage'));
+const PlaylistDetailPage = lazy(() => import('../pages/PlaylistDetailPage'));
+const ArtistPage = lazy(() => import('../pages/ArtistPage'));
 const RegisterPage = lazy(() => import('../pages/auth/RegisterPage'));
 const SongDetail = lazy(() => import('../pages/song/SongDetail'));
 const ShadcnDemo = lazy(() => import('../pages/ShadcnDemo'));
@@ -17,8 +22,14 @@ const AdminUpload = lazy(() => import('../pages/admin/AdminUpload'));
 const AdminUsers = lazy(() => import('../pages/admin/AdminUsers'));
 
 
+// Legacy DefaultLayout has been removed; use FloatingLayout, AdminLayout, or null.
 const PublicRoutes = [
+    { path: config.routes.landing, component: LandingPage, layout: null },
     { path: config.routes.home, component: Homepage, layout: FloatingLayout },
+    { path: config.routes.search, component: SearchPage, layout: FloatingLayout },
+    { path: config.routes.library, component: LibraryPage, layout: FloatingLayout },
+    { path: config.routes.playlistDetail, component: PlaylistDetailPage, layout: FloatingLayout },
+    { path: config.routes.artist, component: ArtistPage, layout: FloatingLayout },
     { path: config.routes.login, component: LoginPage, layout: null },
     { path: config.routes.register, component: RegisterPage, layout: null },
     { path: config.routes.song, component: SongDetail, layout: FloatingLayout },

@@ -38,7 +38,7 @@ export const MiniPlayer: React.FC<MiniPlayerProps> = ({
           className="h-full rounded-full transition-all duration-200"
           style={{
             width: `${progress}%`,
-            background: '#00e5ff',
+            background: 'var(--color-accent-neon)',
             boxShadow: '0 0 10px rgba(0,229,255,0.6)',
           }}
         />
@@ -72,8 +72,8 @@ export const MiniPlayer: React.FC<MiniPlayerProps> = ({
             onClick={togglePlay}
             className="w-10 h-10 flex items-center justify-center rounded-full hover:scale-110 active:scale-95 transition-transform"
             style={{
-              background: '#00e5ff',
-              color: '#05070f',
+              background: 'var(--color-accent-neon)',
+              color: 'var(--color-bg-primary)',
               boxShadow: '0 0 24px rgba(0,229,255,0.4)',
             }}
           >
@@ -82,7 +82,7 @@ export const MiniPlayer: React.FC<MiniPlayerProps> = ({
           <button className="text-white/30 hover:text-white/80 transition-colors hover:scale-110">
             <FaForward size={13} />
           </button>
-          <button onClick={(e) => { e.stopPropagation(); onExpand(); }} className="text-white/25 hover:text-[#00e5ff] transition-colors ml-0.5">
+          <button onClick={(e) => { e.stopPropagation(); onExpand(); }} className="text-white/25 hover:text-[var(--color-accent-neon)] transition-colors ml-0.5">
             <FaChevronUp size={15} />
           </button>
         </div>

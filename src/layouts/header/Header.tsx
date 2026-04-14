@@ -1,6 +1,12 @@
 import { Link } from 'react-router-dom';
 import config from '../../config';
 
+/**
+ * @deprecated Legacy light-theme header from pre-FloatingLayout architecture.
+ * Kept temporarily for rollback/reference only.
+ * Do not attach to new routes.
+ * Replacement: FloatingLayout with DynamicIsland and player surfaces.
+ */
 const Header = () => {
     return (
         <header className="bg-white shadow-md">

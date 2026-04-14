@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { Fragment, Suspense, useEffect } from 'react';
 import { PublicRoutes } from './routes/AppRoutes';
 import FloatingLayout from './layouts/FloatingLayout';
@@ -7,10 +7,11 @@ import ErrorPage from './pages/ErrorPage';
 import { useAuthStore } from './store/auth.store';
 import { PageLoader } from './components/ui/page-loader/page-loader';
 import { ErrorBoundary } from './components/common/ErrorBoundary';
+import config from './config';
 
 function App() {
   const location = useLocation();
-  const { loadUser, isLoading } = useAuthStore();
+  const { loadUser, isLoading, isAuthenticated } = useAuthStore();
 
   const matchesRoutePath = (routePath: string, pathname: string) => {
     if (routePath === pathname) return true;
@@ -26,6 +27,29 @@ function App() {
 
   // Toàn trang — khi app đang check auth
   if (isLoading) return <PageLoader />;
+
+  const guestOnlyPaths = [config.routes.landing, config.routes.login, config.routes.register];
+  const isGuestOnlyRoute = guestOnlyPaths.some((routePath) =>
+    matchesRoutePath(routePath, location.pathname)
+  );
+
+  const currentRoute = PublicRoutes.find((route) =>
+    matchesRoutePath(route.path, location.pathname)
+  );
+
+  const isProtectedRoute = Boolean(
+    currentRoute &&
+    !isGuestOnlyRoute &&
+    currentRoute.path !== config.routes.shadcnDemo
+  );
+
+  if (!isAuthenticated && isProtectedRoute) {
+    return <Navigate to={config.routes.landing} replace />;
+  }
+
+  if (isAuthenticated && isGuestOnlyRoute) {
+    return <Navigate to={config.routes.home} replace />;
+  }
 
   // Player chỉ hiện trên các trang có layout (trang chính), ẩn ở login/register/etc.
   const showPlayer = PublicRoutes.some(route => {
@@ -62,30 +86,6 @@ function App() {
                 />
               );
             })}
-            {/* {privateRoutes.map((route, index) => {
-              const Page = route.component;
-              let Layout = route.layout;
-
-              if (Layout === null) {
-                Layout = Fragment;
-              } else if (!Layout) {
-                Layout = DefaultLayout;
-              }
-
-              return (
-                <Route
-                  key={index}
-                  path={route.path}
-                  element={
-                    <ProtectedRoute allowedRoles={route.allowedRoles}>
-                      <Layout>
-                        <Page />
-                      </Layout>
-                    </ProtectedRoute>
-                  }
-                />
-              );
-            })} */}
             <Route
               path="*"
               element={<ErrorPage />}
