@@ -1,13 +1,15 @@
 import Skeleton from '../ui/skeleton/Skeleton';
 
-/** Skeleton card matching the featured song row on the homepage top grid */
+/** Skeleton card matching normalized 160x160 song card on Homepage */
 const SongCardSkeleton = () => {
     return (
-        <div className="bg-zinc-800/40 rounded flex items-center gap-4 overflow-hidden animate-fade-in">
-            {/* Cover placeholder */}
-            <Skeleton className="w-20 h-20 shrink-0 rounded-none" />
-            {/* Title placeholder */}
-            <Skeleton className="h-4 w-24 rounded" />
+        <div className="glass-card p-3 animate-fade-in">
+            <Skeleton className="w-40 h-40 mx-auto rounded-xl" />
+            <div className="mt-3 space-y-2">
+                <Skeleton className="h-4 w-full rounded" />
+                <Skeleton className="h-4 w-[75%] rounded" />
+                <Skeleton className="h-3 w-[55%] rounded" />
+            </div>
         </div>
     );
 };

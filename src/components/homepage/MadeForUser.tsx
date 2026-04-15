@@ -4,7 +4,11 @@ import PlaylistCard from "../layouts/PlaylistCard";
 import { useAuthStore } from "../../store";
 import { Button } from "../ui/button";
 
-const MadeForUser = () => {
+interface MadeForUserProps {
+    showHeader?: boolean;
+}
+
+const MadeForUser = ({ showHeader = true }: MadeForUserProps) => {
     const madeForRef = useRef<HTMLDivElement>(null);
     const [showMadeForLeft, setShowMadeForLeft] = useState(false);
     const [showMadeForRight, setShowMadeForRight] = useState(true);
@@ -79,18 +83,22 @@ const MadeForUser = () => {
     return (
         <div>
 
-            <div className="flex items-center justify-between mb-4">
-                <h2 className="text-white text-2xl font-bold">Made For</h2>
-                <Button
-                    variant="text"
-                    size="text"
-                >
-                    Show all
-                </Button>
-            </div>
-            <p className="text-white mt-4 mb-2">
-                {isAuthenticated ? capitalizeFirstLetter(user?.username || "") : "Guest"}
-            </p>
+            {showHeader && (
+                <>
+                    <div className="flex items-center justify-between mb-4">
+                        <h2 className="text-white text-2xl font-bold">Made For</h2>
+                        <Button
+                            variant="text"
+                            size="text"
+                        >
+                            Show all
+                        </Button>
+                    </div>
+                    <p className="text-white mt-4 mb-2">
+                        {isAuthenticated ? capitalizeFirstLetter(user?.username || "") : "Guest"}
+                    </p>
+                </>
+            )}
 
             <div className="relative group/scroll">
                 {/* Nút trái - chỉ hiện khi showMadeForLeft = true */}

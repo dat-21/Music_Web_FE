@@ -13,14 +13,14 @@ export const Toaster = () => {
         },
         success: {
           iconTheme: {
-            primary: '#10b981', // green-500
-            secondary: '#ffffff',
+            primary: 'var(--color-accent-neon)',
+            secondary: 'var(--color-bg-primary)',
           },
         },
         error: {
           iconTheme: {
-            primary: '#ef4444', // red-500
-            secondary: '#ffffff',
+            primary: 'var(--color-accent-glow)',
+            secondary: 'var(--color-bg-primary)',
           },
         },
       }}
