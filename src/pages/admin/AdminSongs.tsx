@@ -10,7 +10,7 @@ import {
     AlertCircle,
 } from 'lucide-react';
 import { getAllSongsApi } from '../../api/song.api';
-import { deleteSongApi } from '../../api/admin/Admin.api';
+import { deleteSongApi } from '../../api/admin.api';
 import type { Song } from '../../types';
 
 const AdminSongs = () => {

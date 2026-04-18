@@ -13,7 +13,7 @@ const axiosInstance = axios.create({
     }
 });
 
-// Không cần request interceptor để thêm token nữa
+// Không cần request interceptor để thêm token nữa 
 // ⚠️ KHÔNG redirect ở đây - để auth store xử lý 401
 // Redirect trong interceptor gây infinite loop khi chưa login
 axiosInstance.interceptors.response.use(
