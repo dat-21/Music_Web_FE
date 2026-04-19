@@ -1,10 +1,10 @@
 import axios from 'axios';
+import { env } from '@/config/env';
 import { withApiError } from '../utils/apiError.utils';
 import { API_ENDPOINTS } from '../../../shared/contracts';
 import type { ChatbotResponse } from '@/types';
 
-const rawBaseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-const normalizedBaseUrl = rawBaseUrl.replace(/\/+$/, '').replace(/\/api$/, '');
+const normalizedBaseUrl = env.API_URL.replace(/\/+$/, '').replace(/\/api$/, '');
 
 const http = axios.create({
   baseURL: normalizedBaseUrl,

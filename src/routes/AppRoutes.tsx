@@ -1,29 +1,29 @@
 import { lazy } from 'react';
-import config from '../config';
-import FloatingLayout from '../layouts/FloatingLayout';
-import AdminLayout from '../layouts/AdminLayout';
-import { ProtectedRoute } from '../components/auth/ProtectedRoute';
-import { GuestRoute } from '../components/auth/GuestRoute';
+import config from '@/config';
+import FloatingLayout from '@/layouts/FloatingLayout';
+import AdminLayout from '@/layouts/AdminLayout';
+import { ProtectedRoute } from '@/components/auth/ProtectedRoute';
+import { GuestRoute } from '@/components/auth/GuestRoute';
 
-const LoginPage = lazy(() => import('../pages/auth/LoginPage'));
-const LandingPage = lazy(() => import('../pages/LandingPage'));
-const Homepage = lazy(() => import('../pages/Homepage'));
-const SearchPage = lazy(() => import('../pages/SearchPage'));
-const LibraryPage = lazy(() => import('../pages/LibraryPage'));
-const PlaylistDetailPage = lazy(() => import('../pages/PlaylistDetailPage'));
-const ArtistPage = lazy(() => import('../pages/ArtistPage'));
-const RegisterPage = lazy(() => import('../pages/auth/RegisterPage'));
-const SongDetail = lazy(() => import('../pages/song/SongDetail'));
-const ForbiddenPage = lazy(() => import('../pages/errors/ForbiddenPage'));
+const LoginPage = lazy(() => import('@/pages/auth/LoginPage'));
+const LandingPage = lazy(() => import('@/pages/LandingPage'));
+const Homepage = lazy(() => import('@/pages/Homepage'));
+const SearchPage = lazy(() => import('@/pages/SearchPage'));
+const LibraryPage = lazy(() => import('@/pages/LibraryPage'));
+const PlaylistDetailPage = lazy(() => import('@/pages/PlaylistDetailPage'));
+const ArtistPage = lazy(() => import('@/pages/ArtistPage'));
+const RegisterPage = lazy(() => import('@/pages/auth/RegisterPage'));
+const SongDetail = lazy(() => import('@/pages/song/SongDetail'));
+const ForbiddenPage = lazy(() => import('@/pages/errors/ForbiddenPage'));
 
 // Admin pages
-const AdminDashboard = lazy(() => import('../pages/admin/AdminDashboard'));
-const AdminSongs = lazy(() => import('../pages/admin/AdminSongs'));
-const AdminUpload = lazy(() => import('../pages/admin/AdminUpload'));
-const AdminUsers = lazy(() => import('../pages/admin/AdminUsers'));
+const AdminDashboard = lazy(() => import('@/pages/admin/AdminDashboard'));
+const AdminSongs = lazy(() => import('@/pages/admin/AdminSongs'));
+const AdminUpload = lazy(() => import('@/pages/admin/AdminUpload'));
+const AdminUsers = lazy(() => import('@/pages/admin/AdminUsers'));
 
 // Dev-only
-const ShadcnDemo = lazy(() => import('../pages/ShadcnDemo'));
+const ShadcnDemo = lazy(() => import('@/pages/ShadcnDemo'));
 
 export type AppRoute = {
     path: string;
