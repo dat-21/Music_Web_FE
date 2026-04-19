@@ -19,14 +19,15 @@ export const useAuthStore = create<AuthState>((set) => ({
             throw error;
         }
     },
-
+ 
     logout: async () => {
         try {
             await authService.logout();
-            set({ user: null, isAuthenticated: false });
         } catch (error) {
-            // Silent fail hoặc throw
             console.error('Logout failed:', error);
+        } finally {
+            // Always clear local auth state to guarantee guest flow transition.
+            set({ user: null, isAuthenticated: false });
         }
     },
 

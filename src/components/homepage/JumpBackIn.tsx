@@ -3,7 +3,11 @@ import { useEffect, useRef, useState } from "react";
 import PlaylistCard from "../layouts/PlaylistCard";
 import { Button } from "../ui/button";
 
-const JumpBackIn = () => {
+interface JumpBackInProps {
+    showHeader?: boolean;
+}
+
+const JumpBackIn = ({ showHeader = true }: JumpBackInProps) => {
     const [showJumpBackLeft, setShowJumpBackLeft] = useState(false);
     const [showJumpBackRight, setShowJumpBackRight] = useState(true);
     // Dữ liệu mẫu cho Jump Back In section
@@ -70,15 +74,17 @@ const JumpBackIn = () => {
 
     return (
         <div>
-            <div className="flex items-center justify-between mb-4">
-                <h2 className="text-white text-2xl font-bold">Jump back in</h2>
-                <Button
-                    variant="text"
-                    size="text"
-                >
-                    Show all
-                </Button>
-            </div>
+            {showHeader && (
+                <div className="flex items-center justify-between mb-4">
+                    <h2 className="text-white text-2xl font-bold">Jump back in</h2>
+                    <Button
+                        variant="text"
+                        size="text"
+                    >
+                        Show all
+                    </Button>
+                </div>
+            )}
             <div className="relative group/jumpbackin">
                 {/* Nút trái */}
                 {showJumpBackLeft && (<button

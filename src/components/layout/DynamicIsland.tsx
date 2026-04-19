@@ -27,7 +27,7 @@ export const DynamicIsland: React.FC<DynamicIslandProps> = ({ onOpenPlayer }) =>
       onClick={(e) => { e.stopPropagation(); navigate(path); }}
       className="flex flex-col items-center gap-1 group transition-all duration-200"
     >
-      <span className="text-[15px] text-white/40 group-hover:text-[#00e5ff] transition-colors group-hover:drop-shadow-[0_0_8px_rgba(0,229,255,0.6)]">{icon}</span>
+      <span className="text-[15px] text-white/40 group-hover:text-[var(--color-accent-neon)] transition-colors group-hover:drop-shadow-[0_0_8px_rgba(0,229,255,0.6)]">{icon}</span>
       <span className="text-[8px] font-bold tracking-[0.2em] uppercase text-transparent group-hover:text-white/50 transition-all">{label}</span>
     </button>
   );
@@ -80,9 +80,9 @@ export const DynamicIsland: React.FC<DynamicIslandProps> = ({ onOpenPlayer }) =>
                   <span className="text-white/90 text-xs font-semibold truncate max-w-[100px]">{currentSong.title}</span>
                   {isPlaying && (
                     <div className="flex gap-[2px] items-end h-3 shrink-0">
-                      <div className="w-[2px] rounded-full bg-[#00e5ff] animate-eq"   style={{ height: '55%' }} />
-                      <div className="w-[2px] rounded-full bg-[#00e5ff] animate-eq-2" style={{ height: '100%' }} />
-                      <div className="w-[2px] rounded-full bg-[#00e5ff] animate-eq-3" style={{ height: '70%' }} />
+                      <div className="w-[2px] rounded-full bg-[var(--color-accent-neon)] animate-eq"   style={{ height: '55%' }} />
+                      <div className="w-[2px] rounded-full bg-[var(--color-accent-neon)] animate-eq-2" style={{ height: '100%' }} />
+                      <div className="w-[2px] rounded-full bg-[var(--color-accent-neon)] animate-eq-3" style={{ height: '70%' }} />
                     </div>
                   )}
                 </>
@@ -119,7 +119,7 @@ export const DynamicIsland: React.FC<DynamicIslandProps> = ({ onOpenPlayer }) =>
                           className="h-full rounded-full"
                           style={{
                             width: `${(usePlayerStore.getState().currentTime / (usePlayerStore.getState().duration || 1)) * 100}%`,
-                            background: '#00e5ff',
+                            background: 'var(--color-accent-neon)',
                             boxShadow: '0 0 8px rgba(0,229,255,0.5)',
                           }}
                         />
@@ -146,9 +146,9 @@ export const DynamicIsland: React.FC<DynamicIslandProps> = ({ onOpenPlayer }) =>
                   </button>
                   <button
                     onClick={togglePlay}
-                    className="w-10 h-10 flex items-center justify-center rounded-full text-[#05070f] hover:scale-110 active:scale-95 transition-transform"
+                    className="w-10 h-10 flex items-center justify-center rounded-full text-[var(--color-bg-primary)] hover:scale-110 active:scale-95 transition-transform"
                     style={{
-                      background: '#00e5ff',
+                      background: 'var(--color-accent-neon)',
                       boxShadow: '0 0 24px rgba(0,229,255,0.4)',
                     }}
                   >

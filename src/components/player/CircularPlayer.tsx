@@ -47,7 +47,7 @@ export const CircularPlayer: React.FC<CircularPlayerProps> = ({
           exit={{ opacity: 0, scale: 0.96, filter: 'blur(16px)' }}
           transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
           className="fixed inset-0 z-[100] flex flex-col items-center justify-center text-white overflow-hidden"
-          style={{ background: '#05070f' }}
+          style={{ background: 'var(--color-bg-primary)' }}
         >
           {/* ── Spatial background ── */}
           <div className="absolute inset-0 pointer-events-none">
@@ -108,7 +108,7 @@ export const CircularPlayer: React.FC<CircularPlayerProps> = ({
               })}
               {/* Progress */}
               <circle cx="200" cy="200" r={R}
-                fill="none" stroke="#00e5ff" strokeWidth="5"
+                fill="none" stroke="var(--color-accent-neon)" strokeWidth="5"
                 strokeDasharray={circumference} strokeDashoffset={offset} strokeLinecap="round"
                 style={{ transition: 'stroke-dashoffset 0.15s linear', filter: 'drop-shadow(0 0 10px rgba(0,229,255,0.5))' }}
               />
@@ -116,7 +116,7 @@ export const CircularPlayer: React.FC<CircularPlayerProps> = ({
               <circle
                 cx={200 + R * Math.cos((currentTime / (duration || 1)) * 2 * Math.PI)}
                 cy={200 + R * Math.sin((currentTime / (duration || 1)) * 2 * Math.PI)}
-                r="8" fill="#00e5ff"
+                r="8" fill="var(--color-accent-neon)"
                 style={{ filter: 'drop-shadow(0 0 10px rgba(0,229,255,0.8))' }}
               />
             </svg>
@@ -132,14 +132,14 @@ export const CircularPlayer: React.FC<CircularPlayerProps> = ({
             >
               <img src={(currentSong as any).coverUrl || '/default-cover.png'} alt={currentSong.title} className="w-full h-full object-cover" />
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <div className="w-5 h-5 rounded-full" style={{ background: '#05070f', border: '2px solid rgba(255,255,255,0.08)' }} />
+                <div className="w-5 h-5 rounded-full" style={{ background: 'var(--color-bg-primary)', border: '2px solid rgba(255,255,255,0.08)' }} />
               </div>
             </motion.div>
 
             {/* ── Orbital controls ── */}
             <button onClick={togglePlay}
               className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-4 z-30 w-16 h-16 flex items-center justify-center rounded-full hover:scale-110 active:scale-95 transition-all"
-              style={{ background: '#00e5ff', color: '#05070f', boxShadow: '0 0 40px rgba(0,229,255,0.45)' }}
+              style={{ background: 'var(--color-accent-neon)', color: 'var(--color-bg-primary)', boxShadow: '0 0 40px rgba(0,229,255,0.45)' }}
             >
               {isPlaying ? <FaPause size={22} /> : <FaPlay size={22} className="ml-1" />}
             </button>
@@ -151,10 +151,10 @@ export const CircularPlayer: React.FC<CircularPlayerProps> = ({
               <FaForward size={18} />
             </button>
 
-            <button className="absolute bottom-4 left-10 z-30 w-11 h-11 flex items-center justify-center rounded-full text-white/25 hover:text-[#00e5ff] hover:scale-110 transition-all hover:drop-shadow-[0_0_10px_rgba(0,229,255,0.5)]">
+            <button className="absolute bottom-4 left-10 z-30 w-11 h-11 flex items-center justify-center rounded-full text-white/25 hover:text-[var(--color-accent-neon)] hover:scale-110 transition-all hover:drop-shadow-[0_0_10px_rgba(0,229,255,0.5)]">
               <FaHeart size={18} />
             </button>
-            <button className="absolute bottom-4 right-10 z-30 w-11 h-11 flex items-center justify-center rounded-full text-white/25 hover:text-[#00e5ff] hover:scale-110 transition-all hover:drop-shadow-[0_0_10px_rgba(0,229,255,0.5)]">
+            <button className="absolute bottom-4 right-10 z-30 w-11 h-11 flex items-center justify-center rounded-full text-white/25 hover:text-[var(--color-accent-neon)] hover:scale-110 transition-all hover:drop-shadow-[0_0_10px_rgba(0,229,255,0.5)]">
               <FaPlus size={18} />
             </button>
           </div>
@@ -169,15 +169,15 @@ export const CircularPlayer: React.FC<CircularPlayerProps> = ({
             <h2 className="text-3xl md:text-4xl font-black text-center text-white tracking-tight">
               {currentSong.title}
             </h2>
-            <p className="text-sm font-bold tracking-[0.25em] uppercase" style={{ color: '#00e5ff', textShadow: '0 0 12px rgba(0,229,255,0.5)' }}>
+            <p className="text-sm font-bold tracking-[0.25em] uppercase" style={{ color: 'var(--color-accent-neon)', textShadow: '0 0 12px rgba(0,229,255,0.5)' }}>
               {currentSong.artist}
             </p>
 
             <div className="flex items-center justify-between w-full mt-5 text-xs text-white/35 font-mono font-semibold">
               <span>{formatTime(currentTime)}</span>
               <div className="flex gap-6">
-                <button className="text-white/20 hover:text-[#b388ff] transition-colors"><FaRandom size={13} /></button>
-                <button className="text-white/20 hover:text-[#00e5ff] transition-colors"><FaRedo size={13} /></button>
+                <button className="text-white/20 hover:text-[var(--color-accent-glow)] transition-colors"><FaRandom size={13} /></button>
+                <button className="text-white/20 hover:text-[var(--color-accent-neon)] transition-colors"><FaRedo size={13} /></button>
                 <button className="text-white/20 hover:text-white/70 transition-colors"><FaVolumeUp size={13} /></button>
               </div>
               <span>{formatTime(duration)}</span>

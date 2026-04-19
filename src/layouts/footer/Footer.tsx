@@ -1,6 +1,12 @@
 import { Mail, MapPin, Phone } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
+/**
+ * @deprecated Legacy light-theme footer from pre-FloatingLayout architecture.
+ * Kept temporarily for rollback/reference only.
+ * Do not attach to new routes.
+ * Replacement: FloatingLayout section footers or page-scoped footer blocks.
+ */
 const Footer = () => {
     return (
         <footer className="bg-gray-800 text-white mt-12 py-8">

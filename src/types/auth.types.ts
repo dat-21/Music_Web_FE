@@ -70,3 +70,14 @@ export interface ChangePasswordRequest {
   newPassword: string;
   confirmPassword: string;
 }
+
+
+export interface ProtectedRouteProps {
+  children: React.ReactNode;
+  requiredRole?: string;
+  redirectTo?: string;
+}
+
+export interface GuestRouteProps {
+    children: React.ReactNode;
+}
