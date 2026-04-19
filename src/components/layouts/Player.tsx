@@ -1,11 +1,11 @@
 import { useEffect, useRef, useCallback } from 'react';
+import { env } from '@/config/env';
 import { usePlayerStore, useAuthStore } from '../../store';
 import { useListenHistory } from '../../hooks/useListenHistory';
 import { API_ENDPOINTS } from '../../../../shared/contracts';
 
 const Player = () => {
-    const rawBaseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-    const normalizedBaseUrl = rawBaseUrl.replace(/\/+$/, '').replace(/\/api$/, '');
+    const normalizedBaseUrl = env.API_URL.replace(/\/+$/, '').replace(/\/api$/, '');
     const historyPositionUrl = `${normalizedBaseUrl}${API_ENDPOINTS.history.position}`;
 
     const {
@@ -108,7 +108,7 @@ const Player = () => {
             audioRef.current.volume = volume;
         }
     }, [volume]);
-    
+
     // Xử lý tua bài hát (seek)
     useEffect(() => {
         if (seekPosition !== null && audioRef.current) {
