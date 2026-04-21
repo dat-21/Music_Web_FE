@@ -1,8 +1,7 @@
-import { useEffect, useState, useCallback, useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Library, Search, Sparkles } from 'lucide-react';
-import { getAllSongsApi } from '../api/song.api';
-import type { Song } from '../types';
+import type { Song, SongCardProps } from '../types';
 import MadeForUser from '../components/homepage/MadeForUser';
 import JumpBackIn from '../components/homepage/JumpBackIn';
 import SectionHeader from '../components/homepage/SectionHeader';
@@ -13,14 +12,8 @@ import { FaPause, FaPlay } from 'react-icons/fa';
 import SongCardSkeleton from '../components/skeletons/SongCardSkeleton';
 import SectionSkeleton from '../components/skeletons/SectionSkeleton';
 import { MoodWheel } from '../components/mood/MoodWheel';
+import { useAllSongs } from '@/hooks/queries/useSongs';
 
-interface SongCardProps {
-    song: Song;
-    isActive: boolean;
-    isPlaying: boolean;
-    onOpen: () => void;
-    onTogglePlay: (event: React.MouseEvent<HTMLButtonElement>) => void;
-}
 
 const toArtistSlug = (artistName: string) =>
     artistName
@@ -65,9 +58,8 @@ const SongCard = ({
                 <button
                     type="button"
                     onClick={onTogglePlay}
-                    className={`absolute inset-0 flex items-center justify-center transition-opacity duration-200 ${
-                        isPlaying ? 'opacity-100' : 'opacity-0 group-hover:opacity-100 group-focus-within:opacity-100'
-                    }`}
+                    className={`absolute inset-0 flex items-center justify-center transition-opacity duration-200 ${isPlaying ? 'opacity-100' : 'opacity-0 group-hover:opacity-100 group-focus-within:opacity-100'
+                        }`}
                     style={{ background: 'rgba(5,7,15,0.46)', backdropFilter: 'blur(3px)' }}
                 >
                     <span
@@ -116,29 +108,14 @@ const SongCard = ({
 };
 
 const Homepage = () => {
-    const [songs, setSongs] = useState<Song[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
     const navigate = useNavigate();
     const user = useAuthStore((state) => state.user);
-
-    const currentSong    = usePlayerStore(s => s.currentSong);
-    const isPlaying      = usePlayerStore(s => s.isPlaying);
+    const currentSong = usePlayerStore(s => s.currentSong);
+    const isPlaying = usePlayerStore(s => s.isPlaying);
     const setCurrentSong = usePlayerStore(s => s.setCurrentSong);
-    const togglePlay     = usePlayerStore(s => s.togglePlay);
+    const togglePlay = usePlayerStore(s => s.togglePlay);
+    const { data: songs = [], isLoading } = useAllSongs();
 
-    useEffect(() => {
-        const fetchSongs = async () => {
-            try {
-                const res = await getAllSongsApi();
-                setSongs(res.data.data?.songs || []);
-            } catch (error) {
-                console.error("Error fetching songs", error);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-        fetchSongs();
-    }, []);
 
     const handlePlayPause = useCallback((e: React.MouseEvent, song: Song) => {
         e.stopPropagation();

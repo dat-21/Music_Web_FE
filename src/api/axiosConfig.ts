@@ -1,10 +1,14 @@
 // src/api/axiosConfig.ts
 import axios from 'axios';
 import { env } from '@/config/env';
-import { API_ENDPOINTS } from '../../../shared/contracts';
+
+const normalizedApiUrl = env.API_URL.replace(/\/+$/, '');
+const apiHost = normalizedApiUrl.endsWith('/api')
+  ? normalizedApiUrl.slice(0, -'/api'.length)
+  : normalizedApiUrl;
 
 const axiosInstance = axios.create({
-  baseURL: `${env.API_URL}${API_ENDPOINTS.base.api}`,
+  baseURL: apiHost,
   withCredentials: true,
   timeout: 10000,
   headers: {

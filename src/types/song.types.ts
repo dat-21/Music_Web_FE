@@ -16,3 +16,10 @@ export interface Song {
     fileKey?: string;
     
 }
+export interface SongCardProps {
+    song: Song;
+    isActive: boolean;
+    isPlaying: boolean;
+    onOpen: () => void;
+    onTogglePlay: (event: React.MouseEvent<HTMLButtonElement>) => void;
+}
