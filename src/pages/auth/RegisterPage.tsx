@@ -18,7 +18,7 @@ const RegisterPage = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [showPassword1, setShowPassword1] = useState(false);
     const { showSuccess, showError, showInfo } = useNotification();
-    const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setError("");
         setSuccess(false);
@@ -70,11 +70,10 @@ const RegisterPage = () => {
     };
 
     const hasError = Boolean(error);
-    const baseInputClass = `w-full pl-10 pr-10 py-3.5 rounded-xl text-white placeholder-zinc-500 outline-none transition-all duration-200 bg-[#0a1020]/88 border ${
-        hasError
+    const baseInputClass = `w-full pl-10 pr-10 py-3.5 rounded-xl text-white placeholder-zinc-500 outline-none transition-all duration-200 bg-[#0a1020]/88 border ${hasError
             ? "border-red-400/60 focus:border-red-400/70 focus:ring-2 focus:ring-red-400/30"
             : "border-white/12 focus:border-cyan-400/65 focus:ring-2 focus:ring-cyan-400/35"
-    }`;
+        }`;
 
     return (
         <div
@@ -206,7 +205,7 @@ const RegisterPage = () => {
                                 </div>
                             )}
 
-                            <div className="space-y-4">
+                            <form onSubmit={handleSubmit} className="space-y-4">
                                 <div>
                                     <label htmlFor="username" className="mb-2 block text-sm font-medium text-zinc-300">
                                         Tên đăng nhập
@@ -330,8 +329,7 @@ const RegisterPage = () => {
                                 </div>
 
                                 <button
-                                    type="button"
-                                    onClick={handleSubmit}
+                                    type="submit"
                                     disabled={success}
                                     className="w-full rounded-xl py-3 font-semibold text-[#04111b] transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-50"
                                     style={{
@@ -348,7 +346,7 @@ const RegisterPage = () => {
                                         "Đăng ký"
                                     )}
                                 </button>
-                            </div>
+                            </form>
 
                             <div className="relative my-6">
                                 <div className="absolute inset-0 flex items-center">
