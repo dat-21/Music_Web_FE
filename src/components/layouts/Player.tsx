@@ -2,7 +2,7 @@ import { useEffect, useRef, useCallback } from 'react';
 import { env } from '@/config/env';
 import { usePlayerStore, useAuthStore } from '../../store';
 import { useListenHistory } from '../../hooks/useListenHistory';
-import { API_ENDPOINTS } from '../../../../shared/contracts';
+import { API_ENDPOINTS } from '../../contracts';
 
 const Player = () => {
     const normalizedBaseUrl = env.API_URL.replace(/\/+$/, '').replace(/\/api$/, '');

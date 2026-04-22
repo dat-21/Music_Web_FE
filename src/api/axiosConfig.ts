@@ -1,7 +1,7 @@
 // src/api/axiosConfig.ts
 import axios from 'axios';
 import { env } from '@/config/env';
-import { API_ENDPOINTS } from '../../../shared/contracts';
+import { API_ENDPOINTS } from '../contracts';
 
 const axiosInstance = axios.create({
   baseURL: `${env.API_URL}${API_ENDPOINTS.base.api}`,

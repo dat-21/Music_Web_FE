@@ -1,5 +1,5 @@
 import axiosInstance from "./axiosConfig";
-import { API_ENDPOINTS, type ApiResponse } from "../../../shared/contracts";
+import { API_ENDPOINTS, type ApiResponse } from "../contracts";
 
 export interface ListenPositionData {
   songId: string;
