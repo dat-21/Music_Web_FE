@@ -62,7 +62,7 @@ const AdminUpload = () => {
             const res = await addSongApi(formData);
             setUploadResult({
                 success: true,
-                message: `"${res.data.data?.title || title}" uploaded successfully!`,
+                message: `"${res.data?.title || title}" uploaded successfully!`,
             });
             // Reset form
             setTitle('');

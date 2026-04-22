@@ -4,9 +4,9 @@ import { getSongByIdApi } from '../../api/song.api';
 import type { Song } from '../../types';
 import { usePlayerStore } from '../../store';
 import {
-  FaPlay, FaPause, FaArrowLeft, FaClock, FaMusic,
-  FaHeart, FaRegHeart, FaShareAlt, FaEllipsisH,
-  FaCompactDisc, FaCalendarAlt, FaDatabase, FaHeadphones, FaThumbsUp
+    FaPlay, FaPause, FaArrowLeft, FaClock, FaMusic,
+    FaHeart, FaRegHeart, FaShareAlt, FaEllipsisH,
+    FaCompactDisc, FaCalendarAlt, FaDatabase, FaHeadphones, FaThumbsUp
 } from 'react-icons/fa';
 import { PageLoader } from '@/components/ui/page-loader/page-loader';
 
@@ -18,10 +18,10 @@ const SongDetail = () => {
     const [isLiked, setIsLiked] = useState(false);
     const [imageLoaded, setImageLoaded] = useState(false);
 
-    const currentSong  = usePlayerStore(s => s.currentSong);
-    const isPlaying    = usePlayerStore(s => s.isPlaying);
+    const currentSong = usePlayerStore(s => s.currentSong);
+    const isPlaying = usePlayerStore(s => s.isPlaying);
     const setCurrentSong = usePlayerStore(s => s.setCurrentSong);
-    const togglePlay   = usePlayerStore(s => s.togglePlay);
+    const togglePlay = usePlayerStore(s => s.togglePlay);
 
     useEffect(() => {
         if (!id) return;
@@ -30,7 +30,7 @@ const SongDetail = () => {
                 setLoading(true);
                 setImageLoaded(false);
                 const res = await getSongByIdApi(id);
-                setSong(res.data.data ?? null);
+                setSong(res.data ?? null);
             } catch (error) {
                 console.error('Error fetching song detail:', error);
             } finally {
@@ -97,7 +97,7 @@ const SongDetail = () => {
                 {/* Artwork */}
                 <div className="relative group shrink-0">
                     <div className="relative w-56 h-56 md:w-64 md:h-64 rounded-3xl overflow-hidden"
-                         style={{ boxShadow: '0 20px 80px rgba(0,0,0,0.8), 0 0 40px rgba(0,229,255,0.06)' }}>
+                        style={{ boxShadow: '0 20px 80px rgba(0,0,0,0.8), 0 0 40px rgba(0,229,255,0.06)' }}>
                         {song.coverUrl ? (
                             <img
                                 src={song.coverUrl} alt={song.title}
@@ -106,14 +106,14 @@ const SongDetail = () => {
                             />
                         ) : (
                             <div className="w-full h-full flex items-center justify-center"
-                                 style={{ background: 'linear-gradient(135deg, rgba(0,229,255,0.15), rgba(179,136,255,0.15))' }}>
+                                style={{ background: 'linear-gradient(135deg, rgba(0,229,255,0.15), rgba(179,136,255,0.15))' }}>
                                 <FaMusic size={48} className="text-white/15" />
                             </div>
                         )}
                         <button onClick={handlePlayPause}
                             className="absolute inset-0 bg-black/0 group-hover:bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
                             <div className="w-16 h-16 rounded-full flex items-center justify-center hover:scale-110 transition-transform"
-                                 style={{ background: 'var(--color-accent-neon)', boxShadow: '0 0 40px rgba(0,229,255,0.5)' }}>
+                                style={{ background: 'var(--color-accent-neon)', boxShadow: '0 0 40px rgba(0,229,255,0.5)' }}>
                                 {isSongPlaying ? <FaPause size={24} className="text-[var(--color-bg-primary)]" /> : <FaPlay size={24} className="text-[var(--color-bg-primary)] ml-1" />}
                             </div>
                         </button>
@@ -167,7 +167,7 @@ const SongDetail = () => {
                     <div className="ml-auto flex items-center gap-2.5">
                         <span className="text-xs font-bold tracking-[0.2em] uppercase" style={{ color: 'var(--color-accent-neon)', textShadow: '0 0 10px rgba(0,229,255,0.5)' }}>Now Playing</span>
                         <div className="flex gap-[3px] items-end h-4">
-                            <div className="w-[3px] rounded-full bg-[var(--color-accent-neon)] animate-eq"   style={{ height: '55%', boxShadow: '0 0 6px var(--color-accent-neon)' }} />
+                            <div className="w-[3px] rounded-full bg-[var(--color-accent-neon)] animate-eq" style={{ height: '55%', boxShadow: '0 0 6px var(--color-accent-neon)' }} />
                             <div className="w-[3px] rounded-full bg-[var(--color-accent-neon)] animate-eq-2" style={{ height: '100%', boxShadow: '0 0 6px var(--color-accent-neon)' }} />
                             <div className="w-[3px] rounded-full bg-[var(--color-accent-neon)] animate-eq-3" style={{ height: '50%', boxShadow: '0 0 6px var(--color-accent-neon)' }} />
                             <div className="w-[3px] rounded-full bg-[var(--color-accent-neon)] animate-eq-4" style={{ height: '80%', boxShadow: '0 0 6px var(--color-accent-neon)' }} />

@@ -196,13 +196,13 @@ const PlaylistDetailPage = () => {
 
                 if (!mounted) return;
 
-                const playlists = playlistResponse.data.data?.playlists ?? [];
+                const playlists = playlistResponse.data?.playlists ?? [];
                 const matchedPlaylist = playlists.find((item) => {
                     const itemId = (item._id || item.id || '').toString();
                     return itemId === playlistId;
                 });
 
-                setAllSongs(songResponse.data.data?.songs ?? []);
+                setAllSongs(songResponse.data?.songs ?? []);
 
                 if (!matchedPlaylist) {
                     setPlaylist(null);

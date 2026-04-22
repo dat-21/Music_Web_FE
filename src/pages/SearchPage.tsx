@@ -92,7 +92,7 @@ const SearchPage = () => {
             try {
                 const response = await getAllSongsApi();
                 if (!mounted) return;
-                setCatalog(response.data.data?.songs ?? []);
+                setCatalog(response.data?.songs ?? []);
             } catch (error) {
                 console.error('Failed to load search catalog', error);
                 if (!mounted) return;
