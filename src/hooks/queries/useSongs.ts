@@ -1,7 +1,7 @@
 // src/hooks/queries/useSongs.ts
 import { useQuery } from "@tanstack/react-query";
 import { getAllSongsApi, getSongByIdApi } from "@/api/song.api";
-import { API_ENDPOINTS, type ApiResponse } from "@/contracts";
+import { API_ENDPOINTS } from "@/contracts";
 import axios from "@/api/axiosConfig";
 import type { Song } from "@/types";
 
@@ -28,7 +28,7 @@ export const useAllSongs = () =>
     queryKey: songKeys.all,
     queryFn: async (): Promise<Song[]> => {
       const res = await getAllSongsApi();
-      return res.data.data?.songs ?? [];
+      return res.data?.songs ?? [];
     },
   });
 
@@ -37,11 +37,11 @@ export const useAllSongsWithPagination = (page: number = 1, limit: number = 20) 
   useQuery<SongListPayload>({
     queryKey: songKeys.allWithParams(page, limit),
     queryFn: async (): Promise<SongListPayload> => {
-      const res = await axios.get<ApiResponse<SongListPayload>>(
+      const res = await axios.get<SongListPayload>(
         API_ENDPOINTS.songs.list,
         { params: { page, limit } }
       );
-      return res.data.data!;
+      return res.data!;
     },
   });
 
@@ -51,7 +51,7 @@ export const useSongById = (id: string) =>
     queryKey: songKeys.detail(id),
     queryFn: async (): Promise<Song | undefined> => {
       const res = await getSongByIdApi(id);
-      return res.data.data;
+      return res.data;
     },
     enabled: !!id, // chỉ fetch khi có id
   });
@@ -61,10 +61,10 @@ export const useSongRecommendations = (enabled: boolean = true) =>
   useQuery<Song[]>({
     queryKey: songKeys.recommendations,
     queryFn: async (): Promise<Song[]> => {
-      const res = await axios.get<ApiResponse<{ songs: Song[] }>>(
+      const res = await axios.get<{ songs: Song[] }>(
         API_ENDPOINTS.songs.recommendations
       );
-      return res.data.data?.songs ?? [];
+      return res.data?.songs ?? [];
     },
     enabled,
   });
@@ -74,10 +74,10 @@ export const usePendingSongs = (enabled: boolean = true) =>
   useQuery<Song[]>({
     queryKey: songKeys.pending,
     queryFn: async (): Promise<Song[]> => {
-      const res = await axios.get<ApiResponse<{ songs: Song[] }>>(
+      const res = await axios.get<{ songs: Song[] }>(
         API_ENDPOINTS.songs.pending
       );
-      return res.data.data?.songs ?? [];
+      return res.data?.songs ?? [];
     },
     enabled,
   });

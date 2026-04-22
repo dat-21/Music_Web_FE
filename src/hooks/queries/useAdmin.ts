@@ -1,6 +1,6 @@
 // src/hooks/queries/useAdmin.ts
 import { useQuery } from "@tanstack/react-query";
-import { API_ENDPOINTS, type ApiResponse, type UserDTO } from "@/contracts";
+import { API_ENDPOINTS, type UserDTO } from "@/contracts";
 import axios from "@/api/axiosConfig";
 
 export interface UsersListResponse {
@@ -22,10 +22,10 @@ export const useUsers = (enabled: boolean = true) =>
   useQuery<UsersListResponse>({
     queryKey: adminKeys.users,
     queryFn: async (): Promise<UsersListResponse> => {
-      const res = await axios.get<ApiResponse<UsersListResponse>>(
+      const res = await axios.get<UsersListResponse>(
         API_ENDPOINTS.admin.users
       );
-      return res.data.data!;
+      return res.data!;
     },
     enabled,
   });
@@ -37,10 +37,10 @@ export const useUserDetail = (id: string, enabled: boolean = true) =>
   useQuery<UserDTO | undefined>({
     queryKey: adminKeys.userDetail(id),
     queryFn: async (): Promise<UserDTO | undefined> => {
-      const res = await axios.get<ApiResponse<UserDTO>>(
+      const res = await axios.get<UserDTO>(
         API_ENDPOINTS.admin.userDetail(id)
       );
-      return res.data.data;
+      return res.data;
     },
     enabled: enabled && !!id,
   });

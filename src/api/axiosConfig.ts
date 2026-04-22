@@ -1,20 +1,3 @@
-// src/api/axiosConfig.ts
-import axios from 'axios';
-import { env } from '@/config/env';
-import { API_ENDPOINTS } from '../contracts';
-
-const axiosInstance = axios.create({
-  baseURL: `${env.API_URL}${API_ENDPOINTS.base.api}`,
-  withCredentials: true,
-  timeout: 10000,
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
-
-axiosInstance.interceptors.response.use(
-  (res) => res,
-  (error) => Promise.reject(error)
-);
-
-export default axiosInstance;
+// Deprecated shim: keep old import path stable.
+// Source of truth is src/lib/api.ts
+export { default } from '@/lib/api';

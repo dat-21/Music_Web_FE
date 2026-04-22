@@ -30,7 +30,7 @@ const SongDetail = () => {
                 setLoading(true);
                 setImageLoaded(false);
                 const res = await getSongByIdApi(id);
-                setSong(res.data.data ?? null);
+                setSong(res.data ?? null);
             } catch (error) {
                 console.error('Error fetching song detail:', error);
             } finally {
