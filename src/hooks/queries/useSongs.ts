@@ -11,7 +11,7 @@ export interface SongListPayload {
   total: number;
   songs: Song[];
 }
-import type { Song } from "@/types";
+
 
 // Query keys tập trung — tránh hardcode string rải rác
 export const songKeys = {
