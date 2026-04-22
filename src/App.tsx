@@ -15,7 +15,7 @@ function App() {
 
   useEffect(() => {
     loadUser();
-  }, []);
+  }, [loadUser]);
 
   // Chờ check auth xong mới render — tránh flash redirect
   if (isLoading) return <PageLoader />;
