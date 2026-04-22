@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, type MouseEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Library, Search, Sparkles } from 'lucide-react';
 import type { Song, SongCardProps } from '../types';
@@ -117,7 +117,7 @@ const Homepage = () => {
     const { data: songs = [], isLoading } = useAllSongs();
 
 
-    const handlePlayPause = useCallback((e: React.MouseEvent, song: Song) => {
+    const handlePlayPause = useCallback((e: MouseEvent, song: Song) => {
         e.stopPropagation();
         if (currentSong?._id === song._id) togglePlay();
         else setCurrentSong(song);

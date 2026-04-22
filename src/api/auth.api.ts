@@ -1,6 +1,6 @@
 // FE: src/api/auth.api.ts
 import axiosInstance from './axiosConfig';
-import { API_ENDPOINTS, type ApiResponse, type UserDTO } from '../../../shared/contracts';
+import { API_ENDPOINTS, type ApiResponse, type UserDTO } from '../contracts';
 
 export const authApi = {
   login: (username: string, password: string) =>

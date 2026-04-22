@@ -1,6 +1,6 @@
 import { authApi } from '../api/auth.api';
 import { withApiError } from '../utils/apiError.utils';
-import type { UserDTO } from '../../../shared/contracts';
+import type { UserDTO } from '../contracts';
 
 class AuthService {
   async login(username: string, password: string): Promise<UserDTO> {

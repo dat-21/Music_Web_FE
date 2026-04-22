@@ -1,5 +1,5 @@
 
-import { API_ENDPOINTS, type ApiResponse } from "../../../shared/contracts";
+import { API_ENDPOINTS, type ApiResponse } from "../contracts";
 import axiosInstance from "./axiosConfig";
 import type { Song } from "@/types/song.types";
 // ===== Song APIs =====

@@ -16,8 +16,8 @@ export const MiniPlayer: React.FC<MiniPlayerProps> = ({
 }) => (
   <motion.div
     initial={{ y: 120, opacity: 0 }}
-    animate={{ y: 0,   opacity: 1 }}
-    exit={{    y: 120, opacity: 0 }}
+    animate={{ y: 0, opacity: 1 }}
+    exit={{ y: 120, opacity: 0 }}
     transition={{ type: 'spring', damping: 26, stiffness: 280 }}
     className="fixed bottom-4 left-4 right-4 md:left-1/2 md:-translate-x-1/2 md:w-[520px] z-40"
   >
@@ -54,7 +54,7 @@ export const MiniPlayer: React.FC<MiniPlayerProps> = ({
             transition: 'border-radius 0.5s',
           }}
         >
-          <img src={(currentSong as any).coverUrl || '/default-cover.png'} className="w-full h-full object-cover scale-110" alt="" />
+          <img src={currentSong.coverUrl || '/default-cover.png'} className="w-full h-full object-cover scale-110" alt="" />
         </div>
 
         {/* Info */}
