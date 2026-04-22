@@ -1,4 +1,4 @@
-import axios from "./axiosConfig";
+import api from "@/lib/api";
 import { API_ENDPOINTS } from "../contracts";
 import type { Song } from "../types";
 
@@ -10,7 +10,7 @@ export interface SongListPayload {
 }
 
 export const getAllSongsApi = () =>
-    axios.get<SongListPayload>(API_ENDPOINTS.songs.list);
+    api.get<SongListPayload>(API_ENDPOINTS.songs.list);
 export const getSongByIdApi = (id: string) =>
-    axios.get<Song>(API_ENDPOINTS.songs.detail(id));
+    api.get<Song>(API_ENDPOINTS.songs.detail(id));
 

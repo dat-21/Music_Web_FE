@@ -2,7 +2,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { getAllSongsApi, getSongByIdApi } from "@/api/song.api";
 import { API_ENDPOINTS } from "@/contracts";
-import axios from "@/api/axiosConfig";
+import api from "@/lib/api";
 import type { Song } from "@/types";
 
 export interface SongListPayload {
@@ -37,7 +37,7 @@ export const useAllSongsWithPagination = (page: number = 1, limit: number = 20) 
   useQuery<SongListPayload>({
     queryKey: songKeys.allWithParams(page, limit),
     queryFn: async (): Promise<SongListPayload> => {
-      const res = await axios.get<SongListPayload>(
+      const res = await api.get<SongListPayload>(
         API_ENDPOINTS.songs.list,
         { params: { page, limit } }
       );
@@ -61,7 +61,7 @@ export const useSongRecommendations = (enabled: boolean = true) =>
   useQuery<Song[]>({
     queryKey: songKeys.recommendations,
     queryFn: async (): Promise<Song[]> => {
-      const res = await axios.get<{ songs: Song[] }>(
+      const res = await api.get<{ songs: Song[] }>(
         API_ENDPOINTS.songs.recommendations
       );
       return res.data?.songs ?? [];
@@ -74,7 +74,7 @@ export const usePendingSongs = (enabled: boolean = true) =>
   useQuery<Song[]>({
     queryKey: songKeys.pending,
     queryFn: async (): Promise<Song[]> => {
-      const res = await axios.get<{ songs: Song[] }>(
+      const res = await api.get<{ songs: Song[] }>(
         API_ENDPOINTS.songs.pending
       );
       return res.data?.songs ?? [];

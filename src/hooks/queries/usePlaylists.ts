@@ -2,7 +2,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { getMyPlaylistsApi } from "@/api/playlist.api";
 import { API_ENDPOINTS } from "@/contracts";
-import axios from "@/api/axiosConfig";
+import api from "@/lib/api";
 import type { LibraryPlaylist } from "@/api/playlist.api";
 
 export interface PlaylistsResponse {
@@ -38,7 +38,7 @@ export const usePublicPlaylists = (enabled: boolean = true) =>
   useQuery<PlaylistsResponse>({
     queryKey: playlistKeys.list,
     queryFn: async (): Promise<PlaylistsResponse> => {
-      const res = await axios.get<PlaylistsResponse>(
+      const res = await api.get<PlaylistsResponse>(
         API_ENDPOINTS.playlist.list
       );
       return res.data!;
@@ -53,7 +53,7 @@ export const usePlaylistById = (id: string, enabled: boolean = true) =>
   useQuery<LibraryPlaylist | undefined>({
     queryKey: playlistKeys.detail(id),
     queryFn: async (): Promise<LibraryPlaylist | undefined> => {
-      const res = await axios.get<LibraryPlaylist>(
+      const res = await api.get<LibraryPlaylist>(
         API_ENDPOINTS.playlist.detail(id)
       );
       return res.data;
