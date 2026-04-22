@@ -1,14 +1,10 @@
 // src/api/axiosConfig.ts
 import axios from 'axios';
 import { env } from '@/config/env';
-
-const normalizedApiUrl = env.API_URL.replace(/\/+$/, '');
-const apiHost = normalizedApiUrl.endsWith('/api')
-  ? normalizedApiUrl.slice(0, -'/api'.length)
-  : normalizedApiUrl;
+import { API_ENDPOINTS } from '../contracts';
 
 const axiosInstance = axios.create({
-  baseURL: apiHost,
+  baseURL: `${env.API_URL}${API_ENDPOINTS.base.api}`,
   withCredentials: true,
   timeout: 10000,
   headers: {
@@ -18,9 +14,7 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.response.use(
   (res) => res,
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
 export default axiosInstance;

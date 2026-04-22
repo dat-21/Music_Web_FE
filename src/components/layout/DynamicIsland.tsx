@@ -17,8 +17,8 @@ export const DynamicIsland: React.FC<DynamicIslandProps> = ({ onOpenPlayer }) =>
   const navigate = useNavigate();
 
   const currentSong = usePlayerStore(s => s.currentSong);
-  const isPlaying   = usePlayerStore(s => s.isPlaying);
-  const togglePlay  = usePlayerStore(s => s.togglePlay);
+  const isPlaying = usePlayerStore(s => s.isPlaying);
+  const togglePlay = usePlayerStore(s => s.togglePlay);
 
   const active = isHovered || isExpanded;
 
@@ -41,7 +41,7 @@ export const DynamicIsland: React.FC<DynamicIslandProps> = ({ onOpenPlayer }) =>
         onClick={() => setIsExpanded(v => !v)}
         className="relative cursor-pointer"
         animate={{
-          width:  isExpanded ? 400 : (active && currentSong ? 260 : currentSong ? 200 : 150),
+          width: isExpanded ? 400 : (active && currentSong ? 260 : currentSong ? 200 : 150),
           height: isExpanded ? 156 : 48,
         }}
         transition={{ type: 'spring', damping: 26, stiffness: 300 }}
@@ -72,7 +72,7 @@ export const DynamicIsland: React.FC<DynamicIslandProps> = ({ onOpenPlayer }) =>
                     style={{ animation: isPlaying ? 'orbit-spin 8s linear infinite' : 'none' }}
                   >
                     <img
-                      src={(currentSong as any).coverUrl || '/default-cover.png'}
+                      src={currentSong.coverUrl || '/default-cover.png'}
                       className="w-full h-full object-cover scale-125"
                       alt=""
                     />
@@ -80,7 +80,7 @@ export const DynamicIsland: React.FC<DynamicIslandProps> = ({ onOpenPlayer }) =>
                   <span className="text-white/90 text-xs font-semibold truncate max-w-[100px]">{currentSong.title}</span>
                   {isPlaying && (
                     <div className="flex gap-[2px] items-end h-3 shrink-0">
-                      <div className="w-[2px] rounded-full bg-[var(--color-accent-neon)] animate-eq"   style={{ height: '55%' }} />
+                      <div className="w-[2px] rounded-full bg-[var(--color-accent-neon)] animate-eq" style={{ height: '55%' }} />
                       <div className="w-[2px] rounded-full bg-[var(--color-accent-neon)] animate-eq-2" style={{ height: '100%' }} />
                       <div className="w-[2px] rounded-full bg-[var(--color-accent-neon)] animate-eq-3" style={{ height: '70%' }} />
                     </div>
@@ -109,7 +109,7 @@ export const DynamicIsland: React.FC<DynamicIslandProps> = ({ onOpenPlayer }) =>
                       className="w-16 h-16 rounded-2xl overflow-hidden shrink-0 shadow-glow-sm cursor-pointer hover:scale-105 transition-transform ring-1 ring-white/10"
                       onClick={(e) => { e.stopPropagation(); onOpenPlayer(); }}
                     >
-                      <img src={(currentSong as any).coverUrl || '/default-cover.png'} className="w-full h-full object-cover" alt="" />
+                      <img src={currentSong.coverUrl || '/default-cover.png'} className="w-full h-full object-cover" alt="" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-white font-bold text-sm truncate">{currentSong.title}</p>
@@ -134,10 +134,10 @@ export const DynamicIsland: React.FC<DynamicIslandProps> = ({ onOpenPlayer }) =>
               {/* Bottom row */}
               <div className="flex items-center justify-between">
                 <div className="flex gap-5" onClick={e => e.stopPropagation()}>
-                  <NavLink icon={<FaHome />}        label="Home"    path="/"       />
-                  <NavLink icon={<FaSearch />}      label="Search"  path="/search" />
-                  <NavLink icon={<FaCompactDisc />} label="Library" path="/library"/>
-                  <NavLink icon={<FaUser />}        label="Profile" path="/profile"/>
+                  <NavLink icon={<FaHome />} label="Home" path="/" />
+                  <NavLink icon={<FaSearch />} label="Search" path="/search" />
+                  <NavLink icon={<FaCompactDisc />} label="Library" path="/library" />
+                  <NavLink icon={<FaUser />} label="Profile" path="/profile" />
                 </div>
 
                 <div className="flex items-center gap-4" onClick={e => e.stopPropagation()}>

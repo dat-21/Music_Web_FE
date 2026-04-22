@@ -52,7 +52,7 @@ export const CircularPlayer: React.FC<CircularPlayerProps> = ({
           {/* ── Spatial background ── */}
           <div className="absolute inset-0 pointer-events-none">
             <motion.img
-              src={(currentSong as any).coverUrl || '/default-cover.png'}
+              src={currentSong.coverUrl || '/default-cover.png'}
               alt=""
               className="absolute inset-0 w-full h-full object-cover"
               style={{ filter: 'blur(120px) saturate(1.8) brightness(0.35)', opacity: 0.45, transform: 'scale(1.3)' }}
@@ -63,7 +63,7 @@ export const CircularPlayer: React.FC<CircularPlayerProps> = ({
             <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at center, transparent 25%, rgba(5,7,15,0.96) 70%)' }} />
             {/* Center glow */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full"
-                 style={{ background: 'radial-gradient(circle, rgba(0,229,255,0.06) 0%, transparent 60%)' }} />
+              style={{ background: 'radial-gradient(circle, rgba(0,229,255,0.06) 0%, transparent 60%)' }} />
           </div>
 
           {/* ── Close ── */}
@@ -130,7 +130,7 @@ export const CircularPlayer: React.FC<CircularPlayerProps> = ({
               animate={{ rotate: isPlaying ? [0, 360] : 0, scale: isPlaying ? 1.02 : 1 }}
               transition={{ rotate: { repeat: Infinity, duration: 25, ease: 'linear' }, scale: { type: 'spring', damping: 20 } }}
             >
-              <img src={(currentSong as any).coverUrl || '/default-cover.png'} alt={currentSong.title} className="w-full h-full object-cover" />
+              <img src={currentSong.coverUrl || '/default-cover.png'} alt={currentSong.title} className="w-full h-full object-cover" />
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                 <div className="w-5 h-5 rounded-full" style={{ background: 'var(--color-bg-primary)', border: '2px solid rgba(255,255,255,0.08)' }} />
               </div>

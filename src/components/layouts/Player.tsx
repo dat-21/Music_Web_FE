@@ -2,7 +2,7 @@ import { useEffect, useRef, useCallback } from 'react';
 import { env } from '@/config/env';
 import { usePlayerStore, useAuthStore } from '../../store';
 import { useListenHistory } from '../../hooks/useListenHistory';
-import { API_ENDPOINTS } from '../../../../shared/contracts';
+import { API_ENDPOINTS } from '../../contracts';
 
 const Player = () => {
     const normalizedBaseUrl = env.API_URL.replace(/\/+$/, '').replace(/\/api$/, '');
@@ -120,12 +120,14 @@ const Player = () => {
 
     // Lưu vị trí khi user rời trang (beforeunload)
     useEffect(() => {
+        const audio = audioRef.current;
+
         const handleBeforeUnload = () => {
-            if (isAuthenticated && currentSong && audioRef.current && audioRef.current.currentTime > 0) {
+            if (isAuthenticated && currentSong && audio && audio.currentTime > 0) {
                 // Dùng navigator.sendBeacon để đảm bảo request được gửi
                 const data = JSON.stringify({
                     songId: currentSong._id,
-                    position: Math.floor(audioRef.current.currentTime),
+                    position: Math.floor(audio.currentTime),
                 });
                 navigator.sendBeacon(
                     historyPositionUrl,
@@ -138,8 +140,8 @@ const Player = () => {
         return () => {
             window.removeEventListener('beforeunload', handleBeforeUnload);
             // Cleanup: lưu vị trí khi component unmount
-            if (isAuthenticated && currentSong && audioRef.current && audioRef.current.currentTime > 0) {
-                saveImmediately(currentSong._id, audioRef.current.currentTime);
+            if (isAuthenticated && currentSong && audio && audio.currentTime > 0) {
+                saveImmediately(currentSong._id, audio.currentTime);
             }
             stopPeriodicSync();
         };

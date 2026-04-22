@@ -14,9 +14,10 @@ const getEnv = (key: string): string => {
   return value.trim().replace(/\/+$/, ''); // xóa trailing slash
 };
 
+// src/config/env.ts
 export const env = {
-  API_URL: getEnv('VITE_API_URL'),
-  MODE:    import.meta.env.MODE,   // 'development' | 'production'
+  // Xóa cả /api lẫn trailing slash ngay tại đây
+  API_URL: getEnv('VITE_API_URL').replace(/\/+$/, '').replace(/\/api$/, ''),
   IS_DEV:  import.meta.env.DEV,
   IS_PROD: import.meta.env.PROD,
 } as const;

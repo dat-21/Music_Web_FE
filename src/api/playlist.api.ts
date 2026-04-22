@@ -1,5 +1,5 @@
 import axios from './axiosConfig';
-import { API_ENDPOINTS, type ApiResponse } from '../../../shared/contracts';
+import { API_ENDPOINTS, type ApiResponse } from '../contracts';
 import type { Song } from '@/types';
 
 export interface LibraryPlaylist {

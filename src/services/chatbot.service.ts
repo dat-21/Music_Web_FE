@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { env } from '@/config/env';
 import { withApiError } from '../utils/apiError.utils';
-import { API_ENDPOINTS } from '../../../shared/contracts';
+import { API_ENDPOINTS } from '../contracts';
 import type { ChatbotResponse } from '@/types';
 
 const normalizedBaseUrl = env.API_URL.replace(/\/+$/, '').replace(/\/api$/, '');
