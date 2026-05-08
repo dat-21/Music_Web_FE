@@ -1,5 +1,5 @@
-import axiosInstance from "./axiosConfig";
-import { API_ENDPOINTS, type ApiResponse } from "../contracts";
+import api from "@/lib/api";
+import { API_ENDPOINTS } from "../contracts";
 
 export interface ListenPositionData {
   songId: string;
@@ -39,19 +39,19 @@ export const updateListenPosition = async (
   songId: string,
   position: number
 ): Promise<ListenPositionData> => {
-  const response = await axiosInstance.post(API_ENDPOINTS.history.position, {
+  const response = await api.post<ListenPositionData>(API_ENDPOINTS.history.position, {
     songId,
     position,
   });
-  return response.data.data;
+  return response.data!;
 };
 
 // Lấy vị trí nghe đã lưu của một bài hát
 export const getListenPosition = async (
   songId: string
 ): Promise<ListenPositionData> => {
-  const response = await axiosInstance.get(API_ENDPOINTS.history.positionBySong(songId));
-  return response.data.data;
+  const response = await api.get<ListenPositionData>(API_ENDPOINTS.history.positionBySong(songId));
+  return response.data!;
 };
 
 // Lấy toàn bộ lịch sử nghe
@@ -59,18 +59,18 @@ export const getListenHistory = async (
   page = 1,
   limit = 50
 ): Promise<ListenHistoryResponse> => {
-  const response = await axiosInstance.get<ApiResponse<ListenHistoryResponse>>(API_ENDPOINTS.history.list, {
+  const response = await api.get<ListenHistoryResponse>(API_ENDPOINTS.history.list, {
     params: { page, limit },
   });
-  return response.data.data!;
+  return response.data!;
 };
 
 // Xóa một bài khỏi lịch sử
 export const removeFromHistory = async (songId: string): Promise<void> => {
-  await axiosInstance.delete(API_ENDPOINTS.history.remove(songId));
+  await api.delete(API_ENDPOINTS.history.remove(songId));
 };
 
 // Xóa toàn bộ lịch sử
 export const clearHistory = async (): Promise<void> => {
-  await axiosInstance.delete(API_ENDPOINTS.history.clear);
+  await api.delete(API_ENDPOINTS.history.clear);
 };

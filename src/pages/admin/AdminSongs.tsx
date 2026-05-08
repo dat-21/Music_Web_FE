@@ -25,7 +25,7 @@ const AdminSongs = () => {
         setError(null);
         try {
             const res = await getAllSongsApi();
-            setSongs(res.data.data?.songs || []);
+            setSongs(res.data?.songs || []);
         } catch (err) {
             console.error('Failed to fetch songs:', err);
             setError('Failed to load songs. Make sure the backend is running.');

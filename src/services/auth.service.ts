@@ -6,7 +6,7 @@ class AuthService {
   async login(username: string, password: string): Promise<UserDTO> {
     return withApiError(async () => {
       const res = await authApi.login(username, password); 
-      return res.data.data!;
+      return res.data!;
     }, 'Đăng nhập thất bại');
   }
 
@@ -26,7 +26,7 @@ class AuthService {
   async getProfile(): Promise<UserDTO> {
     return withApiError(async () => {
       const res = await authApi.me();
-      return res.data.data!;
+      return res.data!;
     }, 'Không thể lấy thông tin người dùng');
   }
 }

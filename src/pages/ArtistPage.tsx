@@ -150,8 +150,8 @@ const ArtistPage = () => {
 
                 if (!mounted) return;
 
-                setCatalog(songResponse.data.data?.songs ?? []);
-                setPlaylistCatalog(playlistResponse?.data.data?.playlists ?? []);
+                setCatalog(songResponse.data?.songs ?? []);
+                setPlaylistCatalog(playlistResponse?.data?.playlists ?? []);
             } catch (error) {
                 if (!mounted) return;
 

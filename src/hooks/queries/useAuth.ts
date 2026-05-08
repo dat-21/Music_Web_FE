@@ -19,7 +19,7 @@ export const useCurrentUser = (enabled: boolean = true) =>
     queryFn: async (): Promise<UserDTO | undefined> => {
       try {
         const res = await authApi.me();
-        return res.data.data;
+        return res.data;
       } catch {
         // Nếu không authenticate, trả về undefined thay vì throw
         return undefined;

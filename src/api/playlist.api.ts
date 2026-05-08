@@ -1,5 +1,5 @@
-import axios from './axiosConfig';
-import { API_ENDPOINTS, type ApiResponse } from '../contracts';
+import api from '@/lib/api';
+import { API_ENDPOINTS } from '../contracts';
 import type { Song } from '@/types';
 
 export interface LibraryPlaylist {
@@ -26,7 +26,7 @@ export interface LibraryPayload {
 }
 
 export const getMyPlaylistsApi = () =>
-    axios.get<ApiResponse<LibraryPayload>>(API_ENDPOINTS.playlist.mine);
+    api.get<LibraryPayload>(API_ENDPOINTS.playlist.mine);
 
 export const deletePlaylistApi = (id: string) =>
-    axios.delete<ApiResponse<null>>(API_ENDPOINTS.playlist.detail(id));
+    api.delete<null>(API_ENDPOINTS.playlist.detail(id));

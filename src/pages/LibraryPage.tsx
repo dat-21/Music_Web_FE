@@ -139,7 +139,7 @@ const LibraryPage = () => {
                 const response = await getMyPlaylistsApi();
                 if (!mounted) return;
 
-                setLibraryPlaylists(response.data.data?.playlists ?? []);
+                setLibraryPlaylists(response.data?.playlists ?? []);
             } catch (error) {
                 const message = getApiErrorMessage(
                     error as AxiosError<{ message?: string }> | Error,
