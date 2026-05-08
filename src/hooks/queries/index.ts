@@ -7,7 +7,6 @@ export {
   useSongRecommendations,
   usePendingSongs,
   songKeys,
-  type SongListPayload,
 } from './useSongs';
 
 // ===== Auth =====

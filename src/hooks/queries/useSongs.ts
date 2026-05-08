@@ -3,14 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getAllSongsApi, getSongByIdApi } from "@/api/song.api";
 import { API_ENDPOINTS } from "@/contracts";
 import api from "@/lib/api";
-import type { Song } from "@/types";
-
-export interface SongListPayload {
-  page: number;
-  limit: number;
-  total: number;
-  songs: Song[];
-}
+import type { Song, SongListPayload } from "@/types";
 
 
 // Query keys tập trung — tránh hardcode string rải rác 
