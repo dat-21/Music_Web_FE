@@ -3,7 +3,7 @@ import axios, {
   type AxiosRequestConfig,
 } from "axios";
 import { env } from "@/config/env";
-import { API_ENDPOINTS, type ApiResponse } from "@/contracts";
+import { type ApiResponse } from "@/contracts";
 
 const unwrap = <T>(promise: Promise<{ data: T }>): Promise<T> =>
   promise.then((res) => res.data);
@@ -29,7 +29,7 @@ type UnwrappedApiInstance = Omit<AxiosInstance, "get" | "delete" | "post" | "put
 };
 
 const rawApi = axios.create({
-  baseURL: `${env.API_URL}${API_ENDPOINTS.base.api}`,
+  baseURL: env.API_URL,
   withCredentials: true,
   timeout: 10000,
   headers: {
