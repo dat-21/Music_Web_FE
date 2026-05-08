@@ -1,7 +1,5 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getSongByIdApi } from '../../api/song.api';
-import type { Song } from '../../types';
 import { usePlayerStore } from '../../store';
 import {
     FaPlay, FaPause, FaArrowLeft, FaClock, FaMusic,
@@ -9,12 +7,11 @@ import {
     FaCompactDisc, FaCalendarAlt, FaDatabase, FaHeadphones, FaThumbsUp
 } from 'react-icons/fa';
 import { PageLoader } from '@/components/ui/page-loader/page-loader';
+import { useSongById } from '@/hooks/queries/useSongs';
 
 const SongDetail = () => {
-    const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
-    const [song, setSong] = useState<Song | null>(null);
-    const [loading, setLoading] = useState(true);
+    // const [loading, setLoading] = useState(true);
     const [isLiked, setIsLiked] = useState(false);
     const [imageLoaded, setImageLoaded] = useState(false);
 
@@ -22,23 +19,13 @@ const SongDetail = () => {
     const isPlaying = usePlayerStore(s => s.isPlaying);
     const setCurrentSong = usePlayerStore(s => s.setCurrentSong);
     const togglePlay = usePlayerStore(s => s.togglePlay);
+    const { id } = useParams<{ id: string }>(); // Lấy id từ URL
+    const {
+        data: song,
+        isLoading,
+        error,
+    } = useSongById(id!);
 
-    useEffect(() => {
-        if (!id) return;
-        const fetchSongDetail = async () => {
-            try {
-                setLoading(true);
-                setImageLoaded(false);
-                const res = await getSongByIdApi(id);
-                setSong(res.data ?? null);
-            } catch (error) {
-                console.error('Error fetching song detail:', error);
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchSongDetail();
-    }, [id]);
 
     const handlePlayPause = useCallback(() => {
         if (!song) return;
@@ -51,8 +38,21 @@ const SongDetail = () => {
 
     const formatDuration = (s: number) => `${Math.floor(s / 60)}:${(s % 60).toString().padStart(2, '0')}`;
 
-    if (loading) {
+    if (isLoading) {
         return <PageLoader fullscreen={false} className="min-h-screen" message="Loading song..." />;
+    }
+
+    if (error) {
+        return (
+            <div className="flex flex-col items-center justify-center min-h-[60vh] gap-6">
+                <div className="w-20 h-20 rounded-full glass-card flex items-center justify-center">
+                    <FaMusic size={28} className="text-white/20" />
+                </div>
+                <p className="text-white/50 text-lg">Error loading song</p>
+                <p className="text-white/30 text-sm">{(error as Error)?.message || 'Something went wrong'}</p>
+                <button onClick={() => navigate(-1)} className="btn-primary px-8 py-3 text-sm">Go Back</button>
+            </div>
+        );
     }
 
     if (!song) {
@@ -114,7 +114,7 @@ const SongDetail = () => {
                             className="absolute inset-0 bg-black/0 group-hover:bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
                             <div className="w-16 h-16 rounded-full flex items-center justify-center hover:scale-110 transition-transform"
                                 style={{ background: 'var(--color-accent-neon)', boxShadow: '0 0 40px rgba(0,229,255,0.5)' }}>
-                                {isSongPlaying ? <FaPause size={24} className="text-[var(--color-bg-primary)]" /> : <FaPlay size={24} className="text-[var(--color-bg-primary)] ml-1" />}
+                                {isSongPlaying ? <FaPause size={24} className="text-(--color-bg-primary)" /> : <FaPlay size={24} className="text-(--color-bg-primary) ml-1" />}
                             </div>
                         </button>
                     </div>
@@ -167,10 +167,10 @@ const SongDetail = () => {
                     <div className="ml-auto flex items-center gap-2.5">
                         <span className="text-xs font-bold tracking-[0.2em] uppercase" style={{ color: 'var(--color-accent-neon)', textShadow: '0 0 10px rgba(0,229,255,0.5)' }}>Now Playing</span>
                         <div className="flex gap-[3px] items-end h-4">
-                            <div className="w-[3px] rounded-full bg-[var(--color-accent-neon)] animate-eq" style={{ height: '55%', boxShadow: '0 0 6px var(--color-accent-neon)' }} />
-                            <div className="w-[3px] rounded-full bg-[var(--color-accent-neon)] animate-eq-2" style={{ height: '100%', boxShadow: '0 0 6px var(--color-accent-neon)' }} />
-                            <div className="w-[3px] rounded-full bg-[var(--color-accent-neon)] animate-eq-3" style={{ height: '50%', boxShadow: '0 0 6px var(--color-accent-neon)' }} />
-                            <div className="w-[3px] rounded-full bg-[var(--color-accent-neon)] animate-eq-4" style={{ height: '80%', boxShadow: '0 0 6px var(--color-accent-neon)' }} />
+                            <div className="w-[3px] rounded-full bg-(--color-accent-neon) animate-eq" style={{ height: '55%', boxShadow: '0 0 6px var(--color-accent-neon)' }} />
+                            <div className="w-[3px] rounded-full bg-(--color-accent-neon) animate-eq-2" style={{ height: '100%', boxShadow: '0 0 6px var(--color-accent-neon)' }} />
+                            <div className="w-[3px] rounded-full bg-(--color-accent-neon) animate-eq-3" style={{ height: '50%', boxShadow: '0 0 6px var(--color-accent-neon)' }} />
+                            <div className="w-[3px] rounded-full bg-(--color-accent-neon) animate-eq-4" style={{ height: '80%', boxShadow: '0 0 6px var(--color-accent-neon)' }} />
                         </div>
                     </div>
                 )}
@@ -180,7 +180,7 @@ const SongDetail = () => {
             {song.genres && song.genres.length > 0 && (
                 <div className="flex flex-wrap gap-2 mb-10">
                     {song.genres.map((genre, i) => (
-                        <span key={i} className="glass-card px-4 py-1.5 text-xs font-semibold text-white/50 hover:text-[var(--color-accent-neon)] hover:border-[rgba(0,229,255,0.2)] transition-all cursor-pointer">
+                        <span key={i} className="glass-card px-4 py-1.5 text-xs font-semibold text-white/50 hover:text-(--color-accent-neon) hover:border-[rgba(0,229,255,0.2)] transition-all cursor-pointer">
                             {genre}
                         </span>
                     ))}
@@ -194,7 +194,7 @@ const SongDetail = () => {
                     {infoCards.map((card, i) => (
                         <div key={i} className="glass-card p-4 group">
                             <div className="flex items-center gap-2 mb-2">
-                                <span className="text-white/15 group-hover:text-[var(--color-accent-neon)]/50 transition-colors">{card.icon}</span>
+                                <span className="text-white/15 group-hover:text-(--color-accent-neon)/50 transition-colors">{card.icon}</span>
                                 <p className="text-[10px] font-bold text-white/30 uppercase tracking-[0.15em]">{card.label}</p>
                             </div>
                             <p className="text-white font-semibold text-sm truncate">{card.value}</p>
