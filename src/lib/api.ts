@@ -6,8 +6,10 @@ import { env } from "@/config/env";
 import { type ApiResponse } from "@/contracts";
 
 const unwrap = <T>(promise: Promise<{ data: T }>): Promise<T> =>
-  promise.then((res) => res.data);
+  promise.then((res) => res.data); // bóc tách ra và chỉ lấy những thứ cần thiết
 
+
+// Định nghĩa KIỂU cho TypeScript biết các method sẽ trả về gì 
 type UnwrappedApiInstance = Omit<AxiosInstance, "get" | "delete" | "post" | "put" | "patch"> & {
   get<T = unknown>(url: string, config?: AxiosRequestConfig): Promise<ApiResponse<T>>;
   delete<T = unknown>(url: string, config?: AxiosRequestConfig): Promise<ApiResponse<T>>;
