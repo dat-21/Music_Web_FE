@@ -16,6 +16,13 @@ export interface Song {
     fileKey?: string;
     
 }
+
+export interface SongListPayload {
+  page: number;
+  limit: number;
+  total: number;
+  songs: Song[];
+}
 export interface SongCardProps {
     song: Song;
     isActive: boolean;
