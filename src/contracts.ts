@@ -8,7 +8,7 @@ export interface UserDTO {
   id: string;
   username: string;
   email: string;
-  role: 'user' | 'moderator' | 'admin';
+  role: 'user' | 'moderator' | 'admin'; 
   avatarUrl?: string;
   isVerified: boolean;
 }
