@@ -30,6 +30,7 @@ jobs:
         # Set the NODE_AUTH_TOKEN environment variable to authenticate with GitHub Packages
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}
 
       - name: Lint
         run: npm run lint
