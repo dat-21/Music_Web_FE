@@ -27,6 +27,7 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+        # Set the NODE_AUTH_TOKEN environment variable to authenticate with GitHub Packages
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}
 
