@@ -10,7 +10,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@dat-21/contracts": "^0.1.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@heroicons/react": "^2.2.0",
